@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest --passWithNoTests --watch-all",
-    "svgr": "npx @svgr/cli --template assets/svgs/svgr-cli.template.js assets/svgs src/assets/icons --out-dir assets/icons --icon --typescript --no-dimensions"
+    "svgr": "npx @svgr/cli --template assets/svgs/svgr-cli.template.js assets/svgs assets/icons --out-dir assets/icons --icon --typescript --no-dimensions"
   },
   "dependencies": {
     "@svgr/cli": "^6.1.2",

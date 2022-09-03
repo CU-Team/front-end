@@ -20,6 +20,11 @@ const commonStyles = css`
     font-size: 12px;
     font-weight: 400;
   }
+  .common-container {
+    max-width: 375px;
+    width: 100%;
+    margin: 0 auto;
+  }
 `;
 
 export default commonStyles;
