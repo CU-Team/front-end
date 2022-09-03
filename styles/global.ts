@@ -26,6 +26,11 @@ export const GlobalStyle = createGlobalStyle`
     color: inherit;
     cursor: pointer;
   }
+  button{
+    outline: none;
+    border: none;
+    background-color: transparent;
+  }
 
   h1{
     font-size: 24px;
