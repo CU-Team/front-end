@@ -37,41 +37,41 @@ const HomeComponent: React.FC<Props> = props => {
   };
 
   return (
-    <StyledWrapper>
-      <div className={'header'}>
-        <div className={'top'}>
-          <div className={'title'}>
-            <LogoStarIcon width={18} height={18} />
-            <h1>{SERVICE_NAME}</h1>
+    <>
+      <StyledWrapper>
+        <div className={'header'}>
+          <div className={'top'}>
+            <div className={'title'}>
+              <LogoStarIcon width={18} height={18} />
+              <h1>{SERVICE_NAME}</h1>
+            </div>
+            <div className={'my-page-item'} onClick={onClickMyPage} />
           </div>
-          <div className={'my-page-item'} onClick={onClickMyPage} />
+          <div className={'bottom'}>
+            <Tab />
+          </div>
         </div>
-        <div className={'bottom'}>
-          <Tab />
+        <div className={'map-div'}>
+          <KakaoMap openArticle={onClickOverlayItem} />
         </div>
-      </div>
-      <div className={'map-div'}>
-        <KakaoMap openArticle={onClickOverlayItem} />
-      </div>
-      <div className={'add-article'} onClick={onClickAddArticle}>
-        <WritingIcon width={20} height={20} />
-        <div className={'body1'}>기록하기</div>
-      </div>
-      <div className={'modal'}>
-        <WritePageModal
-          open={openedRoute === HomeRouteEnum.WRITE_ARTICLE}
-          onClose={close}
-        />
-        <ArticlePageModal
-          open={openedRoute === HomeRouteEnum.ARTICLE}
-          onClose={close}
-        />
-        <MyPageModal
-          open={openedRoute === HomeRouteEnum.MY_PAGE}
-          onClose={close}
-        />
-      </div>
-    </StyledWrapper>
+        <div className={'add-article'} onClick={onClickAddArticle}>
+          <WritingIcon width={20} height={20} />
+          <div className={'body1'}>기록하기</div>
+        </div>
+      </StyledWrapper>
+      <WritePageModal
+        open={openedRoute === HomeRouteEnum.WRITE_ARTICLE}
+        onClose={close}
+      />
+      <ArticlePageModal
+        open={openedRoute === HomeRouteEnum.ARTICLE}
+        onClose={close}
+      />
+      <MyPageModal
+        open={openedRoute === HomeRouteEnum.MY_PAGE}
+        onClose={close}
+      />
+    </>
   );
 };
 
@@ -79,12 +79,6 @@ const StyledWrapper = styled.div`
   width: 100%;
   height: 100vh;
   position: relative;
-
-  > .modal {
-    * {
-      z-index: 3;
-    }
-  }
 
   > div.add-article {
     cursor: pointer;

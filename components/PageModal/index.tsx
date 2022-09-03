@@ -40,6 +40,7 @@ const StyledWrapper = styled.div`
     opacity: 0;
     background: rgba(0, 0, 0, 0.4);
     transition: opacity 0.15s ease-out;
+    z-index: 3;
   }
   .wrapper {
     position: absolute;
@@ -51,6 +52,7 @@ const StyledWrapper = styled.div`
     transform: translateX(100%);
     transition: transform 0.15s ease-out;
     overflow-y: scroll;
+    z-index: 3;
   }
   &.open {
     .dimmed {
