@@ -3,10 +3,11 @@ import useScript from '@hooks/useScript';
 import type { LocationType } from '@hooks/useGeolocation/types';
 import { INIT_LATITUDE, INIT_LONGITUDE } from '@hooks/useGeolocation/constants';
 import { MINE, YOURS } from '@components/Home/Article/constants';
-import type { OverlayType } from '@hooks/useKakaoMap/types';
+import type { ArticleType } from '@hooks/useKakaoMap/types';
+import useUser from '@hooks/useUser';
 
 const useKakaoMap = (
-  articles: Array<OverlayType>,
+  articles: Array<ArticleType>,
   onClickOverlay: (id: number) => void,
   currentLocation?: LocationType,
 ) => {
@@ -23,6 +24,8 @@ const useKakaoMap = (
   const changedLocation = useRef<LocationType | null>(null);
 
   const [clickedId, setClickedId] = useState<number | null>(null);
+
+  const { user } = useUser();
 
   const searchAddressFromCoords = useCallback(
     (coords: kakao.maps.LatLng) => {
@@ -68,7 +71,7 @@ const useKakaoMap = (
   );
 
   useEffect(() => {
-    if (!mapLoaded) {
+    if (!mapLoaded || !user) {
       return;
     } else {
       const { kakao } = window;
@@ -112,14 +115,14 @@ const useKakaoMap = (
 
           searchAddressFromCoords(markerPosition);
 
-          articles.forEach(article => {
+          articles.forEach((article: ArticleType) => {
             const position = new kakao.maps.LatLng(
               article.latitude,
               article.longitude,
             );
             const customOverlay = new kakao.maps.CustomOverlay({
               position: position,
-              content: article.isMine ? MINE : YOURS,
+              content: article.author === user.username ? MINE : YOURS,
               xAnchor: 0.3,
               yAnchor: 0.91,
             });
@@ -128,22 +131,22 @@ const useKakaoMap = (
             for (let i = 0; i < overLays.length; i++) {
               overLays[overLays.length - 1].setAttribute(
                 'id',
-                String(article.id),
+                String(article.no),
               );
               const numberWrapper =
                 overLays[overLays.length - 1].getElementsByClassName(
                   'number-wrapper',
                 );
               for (let j = 0; j < numberWrapper.length; j++) {
-                if (article.count <= 1) {
-                  //@ts-ignore
-                  numberWrapper[j].style.display = 'none';
-                } else {
-                  const body = numberWrapper[j].getElementsByClassName('body2');
-                  for (let k = 0; k < body.length; k++) {
-                    body[k].innerHTML = String(article.count);
-                  }
-                }
+                // if (article <= 1) {
+                //@ts-ignore
+                numberWrapper[j].style.display = 'none';
+                // } else {
+                //   const body = numberWrapper[j].getElementsByClassName('body2');
+                //   for (let k = 0; k < body.length; k++) {
+                //     body[k].innerHTML = String(article.count);
+                //   }
+                // }
               }
             }
           });
@@ -158,7 +161,7 @@ const useKakaoMap = (
         }
       });
     }
-  }, [mapLoaded, articles]);
+  }, [mapLoaded, articles, user]);
 
   useEffect(() => {
     if (currentAddress) {

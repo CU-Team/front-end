@@ -13,6 +13,7 @@ import ArticlePageModal from '@components/CustomPageModal/ArticlePageModal';
 import MyPageModal from '@components/CustomPageModal/MyPageModal';
 import type { SelectedAddDataType } from '@components/Home/types';
 import { INIT_LATITUDE, INIT_LONGITUDE } from '@hooks/useGeolocation/constants';
+import { ArticleType } from '@hooks/useKakaoMap/types';
 
 interface Props {}
 

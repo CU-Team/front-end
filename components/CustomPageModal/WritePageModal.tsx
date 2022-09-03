@@ -13,6 +13,9 @@ import SelectedMusicItem from '@components/CustomPageModal/SelectedMusicItem';
 import { postArticleAPI } from '~/api/article';
 import type { AxiosResponse } from 'axios';
 import useUser from '@hooks/useUser';
+import type { ArticleType } from '@hooks/useKakaoMap/types';
+import { useSetRecoilState } from 'recoil';
+import { ArticleArrayAtom } from '@hooks/useArticles/atoms';
 
 interface WritePageModalProps extends PageModalProps {
   selectedAddData: SelectedAddDataType | null;
@@ -47,19 +50,26 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
         music: selectedTrack.name,
         author: user.username,
       });
-      console.log(res);
-      return (res.status = 200);
+      return res;
     } else {
-      return false;
+      return null;
     }
+  };
+
+  const setArticles = useSetRecoilState(ArticleArrayAtom);
+  const onSubmit = (article: ArticleType) => {
+    setArticles(prev => [...prev, article]);
   };
 
   const handleSubmit = async () => {
     if (!input) return;
     if (!onClose) return;
     if (!selectedTrack) return;
-    const result = await postArticle();
-    if (result) {
+    const res: AxiosResponse | null = await postArticle();
+
+    if (res) {
+      const { data }: { data: ArticleType } = res;
+      onSubmit(data);
       onClose();
     }
   };
