@@ -4,6 +4,7 @@ import CloseIcon from '~/assets/icons/CloseIcon';
 import PrimaryMarkerIcon from '~/assets/icons/PrimaryMarkerIcon';
 import SearchIcon from '~/assets/icons/SearchIcon';
 import { themedPalette } from '~/libs/themes';
+import SearchMusicBottomSheet from '../CustomBottomSheet/SearchMusicBottomSheet';
 import type { PageModalProps } from '../PageModal';
 import PageModal from '../PageModal';
 
@@ -13,6 +14,7 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
   onClose,
   ...props
 }) => {
+  const [musicOpened, setMusicOpened] = useState(false);
   const [input, setInput] = useState('');
   const handleSubmit = () => {
     if (!input) return;
@@ -21,44 +23,50 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
     onClose();
   };
   return (
-    <PageModal onClose={onClose} direction="bottom" {...props}>
-      <StyledWrapper>
-        <div className="header">
-          <a className="close-btn" onClick={onClose}>
-            <CloseIcon width={24} height={24} />
-          </a>
-          <div className="body1">기록하기</div>
-          <a
-            className={`body1 write-btn ${input ? `active` : ``}`}
-            onClick={handleSubmit}
-          >
-            완료
-          </a>
-        </div>
-        <div className="title subtitle1">
-          <div>
-            <PrimaryMarkerIcon width={19} height={22} /> <span>마루360</span>
-            에서 경험한
+    <>
+      <PageModal onClose={onClose} direction="bottom" {...props}>
+        <StyledWrapper>
+          <div className="header">
+            <a className="close-btn" onClick={onClose}>
+              <CloseIcon width={24} height={24} />
+            </a>
+            <div className="body1">기록하기</div>
+            <a
+              className={`body1 write-btn ${input ? `active` : ``}`}
+              onClick={handleSubmit}
+            >
+              완료
+            </a>
           </div>
-          <div>나의 하이라이트 기억은?</div>
-        </div>
-        <div className="inputs">
-          <div className="input-wrapper">
-            <SearchIcon width={20} height={20} />
-            <input type="text" placeholder="어울리는 음악을 선택해주세요" />
+          <div className="title subtitle1">
+            <div>
+              <PrimaryMarkerIcon width={19} height={22} /> <span>마루360</span>
+              에서 경험한
+            </div>
+            <div>나의 하이라이트 기억은?</div>
           </div>
-          <textarea
-            name=""
-            id=""
-            cols={30}
-            rows={10}
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            placeholder={'이 장소의 하이라이트를 기록해주세요'}
-          />
-        </div>
-      </StyledWrapper>
-    </PageModal>
+          <div className="inputs">
+            <div className="input-wrapper" onClick={() => setMusicOpened(true)}>
+              <SearchIcon width={20} height={20} />
+              <div className="body2">어울리는 음악을 선택해주세요</div>
+            </div>
+            <textarea
+              name=""
+              id=""
+              cols={30}
+              rows={10}
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              placeholder={'이 장소의 하이라이트를 기록해주세요'}
+            />
+          </div>
+        </StyledWrapper>
+      </PageModal>
+      <SearchMusicBottomSheet
+        open={musicOpened}
+        onClose={() => setMusicOpened(false)}
+      />
+    </>
   );
 };
 
@@ -105,6 +113,7 @@ const StyledWrapper = styled.div`
     & > div {
       display: flex;
       align-items: center;
+      gap: 4px;
       margin-bottom: 6px;
       span {
         color: ${themedPalette.primary};
@@ -121,11 +130,8 @@ const StyledWrapper = styled.div`
       border-radius: 8px;
       margin-bottom: 12px;
       padding: 15px 20px;
-      input {
-        border: none;
-        outline: none;
-        background-color: transparent;
-        width: 100%;
+      & > div {
+        color: ${themedPalette.gray3} !important;
       }
     }
     textarea {

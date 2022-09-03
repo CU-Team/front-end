@@ -42,6 +42,7 @@ const StyledWrapper = styled.div`
     opacity: 0;
     background: rgba(0, 0, 0, 0.4);
     transition: opacity 0.15s ease-out;
+    z-index: 5;
   }
   .wrapper {
     position: fixed;
@@ -53,6 +54,7 @@ const StyledWrapper = styled.div`
     background-color: ${themedPalette.gray0};
     transform: translateY(100%);
     transition: transform 0.15s ease-out;
+    z-index: 5;
   }
   &.open {
     .dimmed {
