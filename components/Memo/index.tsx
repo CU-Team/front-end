@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import EmojiPlusIcon from '~/assets/icons/EmojiPlusIcon';
+import PlayIcon from '~/assets/icons/PlayIcon';
+import StopIcon from '~/assets/icons/StopIcon';
 import { themedPalette } from '~/libs/themes';
 
 interface Props {}
 
 const Memo: React.FC<Props> = () => {
+  const [isPlay, setIsPlay] = useState(false);
   return (
     <StyledWrapper>
       <div className="memo">
@@ -22,7 +25,13 @@ const Memo: React.FC<Props> = () => {
           하하하
         </div>
         <div className="music-player">
-          <div className="cover-img"> </div>
+          <div className="cover-img" onClick={() => setIsPlay(!isPlay)}>
+            {isPlay ? (
+              <StopIcon width={50} height={50} />
+            ) : (
+              <PlayIcon width={50} height={50} />
+            )}
+          </div>
           <div className="content">
             <div className="title body2">노래제목 노래제목</div>
             <div className="subtitle caption">가수이름가수이름</div>
@@ -85,6 +94,10 @@ const StyledWrapper = styled.div`
       align-items: center;
       gap: 10px;
       .cover-img {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 50px;
         height: 50px;
         background-color: ${themedPalette.gray10};
