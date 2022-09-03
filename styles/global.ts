@@ -27,11 +27,6 @@ export const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
-  button {
-    border: 0;
-    outline: 0;
-  }
-
   h1{
     font-size: 24px;
   }

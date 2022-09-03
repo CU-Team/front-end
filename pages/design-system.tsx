@@ -1,10 +1,17 @@
 import type { NextPage } from 'next';
+import { useState } from 'react';
 import styled from 'styled-components';
+import ReadBottomSheet from '~/components/CustomBottomSheets/ReadBottomSheet';
+import WriteBottomSheet from '~/components/CustomBottomSheets/WriteBottomSheet';
 import { themedPalette } from '~/libs/themes';
 
 const DesignSystem: NextPage = () => {
+  const [writeOpen, setWriteOpen] = useState(false);
+  const [readOpen, setReadOpen] = useState(false);
   return (
     <StyledWrapper>
+      <button onClick={() => setWriteOpen(true)}>글쓰기</button>
+      <button onClick={() => setReadOpen(true)}>글조회</button>
       <h1>h1</h1>
       <h2>h2</h2>
       <h3>h3</h3>
@@ -26,6 +33,8 @@ const DesignSystem: NextPage = () => {
         <div className="gray9"> </div>
         <div className="gray10"> </div>
       </div>
+      <ReadBottomSheet open={readOpen} onClose={() => setReadOpen(false)} />
+      <WriteBottomSheet open={writeOpen} onClose={() => setWriteOpen(false)} />
     </StyledWrapper>
   );
 };

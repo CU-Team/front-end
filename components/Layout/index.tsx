@@ -10,7 +10,7 @@ type Props = {
 const Layout: React.FC<Props> = ({ children }) => {
   return (
     <StyledWrapper>
-      <div className="container">{children}</div>
+      <div className="common-container layout-container">{children}</div>
     </StyledWrapper>
   );
 };
@@ -26,12 +26,9 @@ const StyledWrapper = styled.div`
   overflow-x: hidden;
   overflow-y: scroll;
   background-color: #fafafa;
-  & > .container {
-    max-width: 375px;
-    width: 100%;
+  & > .layout-container {
     min-height: 100%;
     height: fit-content;
-    margin: 0 auto;
     background-color: ${themedPalette.gray0};
   }
 `;
