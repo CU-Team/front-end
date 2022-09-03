@@ -6,13 +6,15 @@ import { themedPalette } from '~/libs/themes';
 export interface PageModalProps {
   open?: boolean;
   onClose?: () => void;
+  direction?: 'right' | 'bottom';
   children?: ReactNode[] | ReactNode;
 }
 
 const PageModal: React.FC<PageModalProps> = ({
   children,
-  open = false,
   onClose,
+  direction = 'right',
+  open = false,
 }) => {
   return (
     <StyledWrapper
@@ -21,7 +23,7 @@ const PageModal: React.FC<PageModalProps> = ({
     >
       <div className="common-container dimmed"> </div>
       <div
-        className={`common-container wrapper`}
+        className={`common-container wrapper ${direction}`}
         onClick={e => e.stopPropagation()}
       >
         {children}
@@ -47,10 +49,15 @@ const StyledWrapper = styled.div`
     right: 0;
     bottom: 0;
     background-color: ${themedPalette.gray0};
-    transform: translateX(100%);
     transition: transform 0.15s ease-out;
     overflow-y: scroll;
     z-index: 3;
+    &.right {
+      transform: translateX(100%);
+    }
+    &.bottom {
+      transform: translateY(100%);
+    }
   }
   &.open {
     .dimmed {
@@ -61,7 +68,12 @@ const StyledWrapper = styled.div`
       bottom: 0px;
     }
     .wrapper {
-      transform: translateX(0%);
+      &.right {
+        transform: translateX(0%);
+      }
+      &.bottom {
+        transform: translateY(0%);
+      }
     }
   }
 `;

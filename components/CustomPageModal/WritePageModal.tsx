@@ -21,7 +21,7 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
     onClose();
   };
   return (
-    <PageModal onClose={onClose} {...props}>
+    <PageModal onClose={onClose} direction="bottom" {...props}>
       <StyledWrapper>
         <div className="header">
           <a className="close-btn" onClick={onClose}>
