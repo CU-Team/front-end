@@ -28,3 +28,12 @@ export const postArticleAPI = async (body: {
     return CamelCase(e.response);
   }
 };
+
+export const getUserArticles = async (name: string) => {
+  try {
+    const res = await API.get(`articles/user/${name}`);
+    return CamelCase(res);
+  } catch (e: any) {
+    return CamelCase(e.response);
+  }
+};

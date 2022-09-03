@@ -11,12 +11,24 @@ import LocationStarActive from '~/assets/icons/\blocationStarActive';
 import Memo from '../Memo';
 import Setting from '~/assets/icons/Setting';
 import SettingPageModal from './SettingPageModal';
+import useUser from '~/hooks/useUser';
+import { useQuery } from '@tanstack/react-query';
+import { getUserArticles } from '~/api/article';
 
 interface MyPageModalProps extends PageModalProps {}
 
+const username = 'sion';
 const MyPageModal: React.FC<MyPageModalProps> = ({ onClose, ...props }) => {
+  // const user = useUser();
+  // console.log(user.user?.username);
   const [tab, setTab] = useState('feed');
   const [open, setOpen] = useState(false);
+
+  const { data, isLoading, error } = useQuery(['user'], () =>
+    getUserArticles(username),
+  );
+  console.log(data, isLoading, error);
+  if (!data?.data) return null;
   return (
     <>
       <PageModal onClose={onClose} {...props}>
@@ -33,8 +45,8 @@ const MyPageModal: React.FC<MyPageModalProps> = ({ onClose, ...props }) => {
           <div className="profile-header">
             <div className="user-img"> </div>
             <div>
-              임효연의 <br />
-              하이라이트 <span>10개</span>
+              {username}의 <br />
+              하이라이트 <span>{data?.data.length}개</span>
             </div>
           </div>
           <div className="tabs-wrapper">
@@ -63,16 +75,9 @@ const MyPageModal: React.FC<MyPageModalProps> = ({ onClose, ...props }) => {
           </div>
           {tab === `feed` && (
             <div className="memo-list">
-              <Memo />
-              <Memo />
-              <Memo />
-              <Memo />
-              <Memo />
-              <Memo />
-              <Memo />
-              <Memo />
-              <Memo />
-              <Memo />
+              {data?.data.map((memoItem: any, idx: any) => (
+                <Memo key={idx} data={memoItem} />
+              ))}
             </div>
           )}
           {tab === `location` && (

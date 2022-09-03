@@ -7,10 +7,12 @@ import { themedPalette } from '~/libs/themes';
 
 interface Props {
   setOpen?: any;
+  data?: any;
 }
 
-const Memo: React.FC<Props> = ({ setOpen = (a: any) => null }) => {
+const Memo: React.FC<Props> = ({ data, setOpen = (a: any) => null }) => {
   const [isPlay, setIsPlay] = useState(false);
+  if (!data) return null;
   return (
     <StyledWrapper>
       <div className="memo">
