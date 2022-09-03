@@ -1,6 +1,7 @@
-import '@styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import Layout from '~/components/Layout';
+import { GlobalStyle } from '~/styles/global';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -10,7 +11,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="description" content="BROWSER-CONTENT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Component {...pageProps} />
+      <GlobalStyle />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   );
 }
