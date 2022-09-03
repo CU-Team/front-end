@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import BottomSheet from '~/components/BottomSheet';
 import ArticlePageModal from '~/components/CustomPageModal/ArticlePageModal';
 import WritePageModal from '~/components/CustomPageModal/WritePageModal';
+import Spinner from '~/components/Spinner';
 import { themedPalette } from '~/libs/themes';
 
 const DesignSystem: NextPage = () => {
@@ -17,6 +18,7 @@ const DesignSystem: NextPage = () => {
         WritePageModal
       </button>
       <button onClick={() => setArticleModalOpen(true)}>articleModal</button>
+      <Spinner />
       <h1>h1</h1>
       <h2>h2</h2>
       <h3>h3</h3>
