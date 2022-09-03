@@ -10,6 +10,8 @@ import PageModal from '../PageModal';
 import type { SelectedAddDataType } from '@components/Home/types';
 import type { TrackType } from '@components/CustomBottomSheet/types';
 import SelectedMusicItem from '@components/CustomPageModal/SelectedMusicItem';
+import { postArticleAPI } from '~/api/article';
+import type { AxiosResponse } from 'axios';
 
 interface WritePageModalProps extends PageModalProps {
   selectedAddData: SelectedAddDataType | null;
@@ -29,13 +31,34 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
     setSelectedTrack(track);
   };
 
-  const handleSubmit = () => {
+  const postArticle = async () => {
+    if (selectedAddData && selectedTrack) {
+      const res: AxiosResponse = await postArticleAPI({
+        address: selectedAddData.address,
+        longitude: selectedAddData.location.longitude,
+        latitude: selectedAddData.location.latitude,
+        position: selectedAddData.keyword,
+        content: input,
+        link: selectedTrack.url,
+        musicImg: selectedTrack.image[3]['#text'],
+        singer: selectedTrack.artist,
+        music: selectedTrack.name,
+      });
+      console.log(res);
+      return (res.status = 200);
+    } else {
+      return false;
+    }
+  };
+
+  const handleSubmit = async () => {
     if (!input) return;
     if (!onClose) return;
     if (!selectedTrack) return;
-    alert(JSON.stringify(selectedAddData));
-
-    onClose();
+    const result = await postArticle();
+    if (result) {
+      onClose();
+    }
   };
 
   useEffect(() => {

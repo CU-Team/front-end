@@ -1,8 +1,10 @@
 import type { OverlayType } from '@hooks/useKakaoMap/types';
 import { INIT_LATITUDE, INIT_LONGITUDE } from '@hooks/useGeolocation/constants';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import useHomeTab from '@hooks/useTab/useHomeTab';
 import { HomeTabEnum } from '@components/Home/constants';
+import { getArticlesAPI } from '~/api/article';
+import type { AxiosResponse } from 'axios';
 
 const useArticles = () => {
   const { selected } = useHomeTab();
@@ -38,15 +40,31 @@ const useArticles = () => {
     },
   ];
 
-  const [articles, setArticles] = useState<Array<OverlayType>>(temp);
-  const [filteredArticles, setFilteredArticles] =
-    useState<Array<OverlayType>>(temp);
+  const [articles, setArticles] = useState<Array<OverlayType>>([]);
+  const [filteredArticles, setFilteredArticles] = useState<Array<OverlayType>>(
+    [],
+  );
+
+  const getArticles = useCallback(async () => {
+    const res: AxiosResponse = await getArticlesAPI();
+    const { status } = res;
+    if (status === 200) {
+      const { data }: { data: Array<OverlayType> } = res;
+      setArticles(data);
+    }
+  }, []);
 
   useEffect(() => {
-    if (selected === HomeTabEnum.TOTAL) {
-      setFilteredArticles(articles);
-    } else {
-      setFilteredArticles(articles.filter(value => value.isMine));
+    getArticles();
+  }, []);
+
+  useEffect(() => {
+    if (articles.length > 0) {
+      if (selected === HomeTabEnum.TOTAL) {
+        setFilteredArticles(articles);
+      } else {
+        setFilteredArticles(articles.filter(value => value.isMine));
+      }
     }
   }, [selected, articles]);
   return {
