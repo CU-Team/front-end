@@ -11,4 +11,5 @@ export const themedPalette = {
   gray1: '#E2E1E6',
   gray0: '#FFFFFF',
   primary: '#8C46FF',
+  textbox: '#F4F3F6',
 } as const;

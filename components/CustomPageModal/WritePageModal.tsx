@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CloseIcon from '~/assets/icons/CloseIcon';
 import PrimaryMarkerIcon from '~/assets/icons/PrimaryMarkerIcon';
@@ -8,6 +8,8 @@ import SearchMusicBottomSheet from '../CustomBottomSheet/SearchMusicBottomSheet'
 import type { PageModalProps } from '../PageModal';
 import PageModal from '../PageModal';
 import type { SelectedAddDataType } from '@components/Home/types';
+import type { TrackType } from '@components/CustomBottomSheet/types';
+import SelectedMusicItem from '@components/CustomPageModal/SelectedMusicItem';
 
 interface WritePageModalProps extends PageModalProps {
   selectedAddData: SelectedAddDataType | null;
@@ -15,21 +17,38 @@ interface WritePageModalProps extends PageModalProps {
 
 const WritePageModal: React.FC<WritePageModalProps> = ({
   onClose,
+  open,
   selectedAddData,
   ...props
 }) => {
   const [musicOpened, setMusicOpened] = useState(false);
   const [input, setInput] = useState('');
+  const [selectedTrack, setSelectedTrack] = useState<TrackType | null>(null);
+
+  const handleSelectedTrack = (track: TrackType) => {
+    setSelectedTrack(track);
+  };
+
   const handleSubmit = () => {
     if (!input) return;
     if (!onClose) return;
+    if (!selectedTrack) return;
     alert(JSON.stringify(selectedAddData));
-    setInput('');
+
     onClose();
   };
+
+  useEffect(() => {
+    if (!open) {
+      setInput('');
+      setSelectedTrack(null);
+      setMusicOpened(false);
+    }
+  }, [open]);
+
   return (
     <>
-      <PageModal onClose={onClose} direction="bottom" {...props}>
+      <PageModal onClose={onClose} direction="bottom" open={open} {...props}>
         <StyledWrapper>
           <div className="header">
             <a className="close-btn" onClick={onClose}>
@@ -37,7 +56,9 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
             </a>
             <div className="body1">기록하기</div>
             <a
-              className={`body1 write-btn ${input ? `active` : ``}`}
+              className={`body1 write-btn ${
+                input && selectedTrack ? `active` : ``
+              }`}
               onClick={handleSubmit}
             >
               완료
@@ -52,10 +73,20 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
             <div>나의 하이라이트 기억은?</div>
           </div>
           <div className="inputs">
-            <div className="input-wrapper" onClick={() => setMusicOpened(true)}>
-              <SearchIcon width={20} height={20} />
-              <div className="body2">어울리는 음악을 선택해주세요</div>
-            </div>
+            {selectedTrack ? (
+              <SelectedMusicItem
+                track={selectedTrack}
+                onClickChange={() => setMusicOpened(true)}
+              />
+            ) : (
+              <div
+                className="input-wrapper"
+                onClick={() => setMusicOpened(true)}
+              >
+                <SearchIcon width={20} height={20} />
+                <div className="body2">어울리는 음악을 선택해주세요</div>
+              </div>
+            )}
             <textarea
               name=""
               id=""
@@ -71,6 +102,7 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
       <SearchMusicBottomSheet
         open={musicOpened}
         onClose={() => setMusicOpened(false)}
+        handleSelectedTrack={handleSelectedTrack}
       />
     </>
   );
