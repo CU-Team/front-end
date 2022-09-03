@@ -9,152 +9,160 @@ import LocationStar from '~/assets/icons/LocationStar';
 import FeedActive from '~/assets/icons/FeedActive';
 import LocationStarActive from '~/assets/icons/\blocationStarActive';
 import Memo from '../Memo';
+import Setting from '~/assets/icons/Setting';
+import SettingPageModal from './SettingPageModal';
 
 interface MyPageModalProps extends PageModalProps {}
 
 const MyPageModal: React.FC<MyPageModalProps> = ({ onClose, ...props }) => {
   const [tab, setTab] = useState('feed');
+  const [open, setOpen] = useState(false);
   return (
-    <PageModal onClose={onClose} {...props}>
-      <StyledWrapper>
-        <div className="header">
-          <a className="btn" onClick={onClose}>
-            <BackIcon width={24} height={24} />
-          </a>
-          <div className="location body1">마이페이지</div>
-          <a className={`btn`}> </a>
-        </div>
-        <div className="profile-header">
-          <div className="user-img"> </div>
-          <div>
-            임효연의 <br />
-            하이라이트 <span>10개</span>
-          </div>
-        </div>
-        <div className="tabs-wrapper">
-          <div className="tabs">
-            <a
-              className={`tab ${tab === `feed` ? `active` : ``}`}
-              onClick={() => setTab('feed')}
-            >
-              {tab === `feed` ? (
-                <FeedActive width={22} height={22} />
-              ) : (
-                <Feed width={22} height={22} />
-              )}
+    <>
+      <PageModal onClose={onClose} {...props}>
+        <StyledWrapper>
+          <div className="header">
+            <a className="btn" onClick={onClose}>
+              <BackIcon width={24} height={24} />
             </a>
-            <a
-              className={`tab ${tab === `location` ? `active` : ``}`}
-              onClick={() => setTab('location')}
-            >
-              {tab === `location` ? (
-                <LocationStarActive width={22} height={22} />
-              ) : (
-                <LocationStar width={22} height={22} />
-              )}
+            <div className="location body1">마이페이지</div>
+            <a className={`btn`} onClick={() => setOpen(true)}>
+              <Setting width={24} height={24} />
             </a>
           </div>
-        </div>
-        {tab === `feed` && (
-          <div className="memo-list">
-            <Memo />
-            <Memo />
-            <Memo />
-            <Memo />
-            <Memo />
-            <Memo />
-            <Memo />
-            <Memo />
-            <Memo />
-            <Memo />
-          </div>
-        )}
-        {tab === `location` && (
-          <div className="location-list">
-            <div className="location">
-              <div>
-                <LocationStarActive width={15} height={15} />
-                <div className="Body1">마루 360</div>
-              </div>
-              <div className="back">
-                <div>4개</div>
-                <BackIcon width={20} height={20} />
-              </div>
-            </div>
-            <div className="location">
-              <div>
-                <LocationStarActive width={15} height={15} />
-                <div className="Body1">마루 360</div>
-              </div>
-              <div className="back">
-                <div>4개</div>
-                <BackIcon width={20} height={20} />
-              </div>
-            </div>
-            <div className="location">
-              <div>
-                <LocationStarActive width={15} height={15} />
-                <div className="Body1">마루 360</div>
-              </div>
-              <div className="back">
-                <div>4개</div>
-                <BackIcon width={20} height={20} />
-              </div>
-            </div>
-            <div className="location">
-              <div>
-                <LocationStarActive width={15} height={15} />
-                <div className="Body1">마루 360</div>
-              </div>
-              <div className="back">
-                <div>4개</div>
-                <BackIcon width={20} height={20} />
-              </div>
-            </div>
-            <div className="location">
-              <div>
-                <LocationStarActive width={15} height={15} />
-                <div className="Body1">마루 360</div>
-              </div>
-              <div className="back">
-                <div>4개</div>
-                <BackIcon width={20} height={20} />
-              </div>
-            </div>
-            <div className="location">
-              <div>
-                <LocationStarActive width={15} height={15} />
-                <div className="Body1">마루 360</div>
-              </div>
-              <div className="back">
-                <div>4개</div>
-                <BackIcon width={20} height={20} />
-              </div>
-            </div>
-            <div className="location">
-              <div>
-                <LocationStarActive width={15} height={15} />
-                <div className="Body1">마루 360</div>
-              </div>
-              <div className="back">
-                <div>4개</div>
-                <BackIcon width={20} height={20} />
-              </div>
-            </div>
-            <div className="location">
-              <div>
-                <LocationStarActive width={15} height={15} />
-                <div className="Body1">마루 360</div>
-              </div>
-              <div className="back">
-                <div>4개</div>
-                <BackIcon width={20} height={20} />
-              </div>
+          <div className="profile-header">
+            <div className="user-img"> </div>
+            <div>
+              임효연의 <br />
+              하이라이트 <span>10개</span>
             </div>
           </div>
-        )}
-      </StyledWrapper>
-    </PageModal>
+          <div className="tabs-wrapper">
+            <div className="tabs">
+              <a
+                className={`tab ${tab === `feed` ? `active` : ``}`}
+                onClick={() => setTab('feed')}
+              >
+                {tab === `feed` ? (
+                  <FeedActive width={22} height={22} />
+                ) : (
+                  <Feed width={22} height={22} />
+                )}
+              </a>
+              <a
+                className={`tab ${tab === `location` ? `active` : ``}`}
+                onClick={() => setTab('location')}
+              >
+                {tab === `location` ? (
+                  <LocationStarActive width={22} height={22} />
+                ) : (
+                  <LocationStar width={22} height={22} />
+                )}
+              </a>
+            </div>
+          </div>
+          {tab === `feed` && (
+            <div className="memo-list">
+              <Memo />
+              <Memo />
+              <Memo />
+              <Memo />
+              <Memo />
+              <Memo />
+              <Memo />
+              <Memo />
+              <Memo />
+              <Memo />
+            </div>
+          )}
+          {tab === `location` && (
+            <div className="location-list">
+              <div className="location">
+                <div>
+                  <LocationStarActive width={15} height={15} />
+                  <div className="Body1">마루 360</div>
+                </div>
+                <div className="back">
+                  <div>4개</div>
+                  <BackIcon width={20} height={20} />
+                </div>
+              </div>
+              <div className="location">
+                <div>
+                  <LocationStarActive width={15} height={15} />
+                  <div className="Body1">마루 360</div>
+                </div>
+                <div className="back">
+                  <div>4개</div>
+                  <BackIcon width={20} height={20} />
+                </div>
+              </div>
+              <div className="location">
+                <div>
+                  <LocationStarActive width={15} height={15} />
+                  <div className="Body1">마루 360</div>
+                </div>
+                <div className="back">
+                  <div>4개</div>
+                  <BackIcon width={20} height={20} />
+                </div>
+              </div>
+              <div className="location">
+                <div>
+                  <LocationStarActive width={15} height={15} />
+                  <div className="Body1">마루 360</div>
+                </div>
+                <div className="back">
+                  <div>4개</div>
+                  <BackIcon width={20} height={20} />
+                </div>
+              </div>
+              <div className="location">
+                <div>
+                  <LocationStarActive width={15} height={15} />
+                  <div className="Body1">마루 360</div>
+                </div>
+                <div className="back">
+                  <div>4개</div>
+                  <BackIcon width={20} height={20} />
+                </div>
+              </div>
+              <div className="location">
+                <div>
+                  <LocationStarActive width={15} height={15} />
+                  <div className="Body1">마루 360</div>
+                </div>
+                <div className="back">
+                  <div>4개</div>
+                  <BackIcon width={20} height={20} />
+                </div>
+              </div>
+              <div className="location">
+                <div>
+                  <LocationStarActive width={15} height={15} />
+                  <div className="Body1">마루 360</div>
+                </div>
+                <div className="back">
+                  <div>4개</div>
+                  <BackIcon width={20} height={20} />
+                </div>
+              </div>
+              <div className="location">
+                <div>
+                  <LocationStarActive width={15} height={15} />
+                  <div className="Body1">마루 360</div>
+                </div>
+                <div className="back">
+                  <div>4개</div>
+                  <BackIcon width={20} height={20} />
+                </div>
+              </div>
+            </div>
+          )}
+        </StyledWrapper>
+      </PageModal>
+      <SettingPageModal open={open} onClose={() => setOpen(false)} />
+    </>
   );
 };
 
