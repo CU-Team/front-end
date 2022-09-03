@@ -1,17 +1,22 @@
 import type { NextPage } from 'next';
 import { useState } from 'react';
 import styled from 'styled-components';
-import ReadBottomSheet from '~/components/CustomBottomSheets/ReadBottomSheet';
-import WriteBottomSheet from '~/components/CustomBottomSheets/WriteBottomSheet';
+import BottomSheet from '~/components/BottomSheet';
+import ArticlePageModal from '~/components/CustomPageModal/ArticlePageModal';
+import WritePageModal from '~/components/CustomPageModal/WritePageModal';
 import { themedPalette } from '~/libs/themes';
 
 const DesignSystem: NextPage = () => {
-  const [writeOpen, setWriteOpen] = useState(false);
   const [readOpen, setReadOpen] = useState(false);
+  const [writePageModalOpen, setWritePageModalOpen] = useState(false);
+  const [articleModalOpen, setArticleModalOpen] = useState(false);
   return (
     <StyledWrapper>
-      <button onClick={() => setWriteOpen(true)}>글쓰기</button>
-      <button onClick={() => setReadOpen(true)}>글조회</button>
+      <button onClick={() => setReadOpen(true)}>BottomSheet</button>
+      <button onClick={() => setWritePageModalOpen(true)}>
+        WritePageModal
+      </button>
+      <button onClick={() => setArticleModalOpen(true)}>articleModal</button>
       <h1>h1</h1>
       <h2>h2</h2>
       <h3>h3</h3>
@@ -33,8 +38,17 @@ const DesignSystem: NextPage = () => {
         <div className="gray9"> </div>
         <div className="gray10"> </div>
       </div>
-      <ReadBottomSheet open={readOpen} onClose={() => setReadOpen(false)} />
-      <WriteBottomSheet open={writeOpen} onClose={() => setWriteOpen(false)} />
+      <BottomSheet open={readOpen} onClose={() => setReadOpen(false)}>
+        dd
+      </BottomSheet>
+      <WritePageModal
+        open={writePageModalOpen}
+        onClose={() => setWritePageModalOpen(false)}
+      />
+      <ArticlePageModal
+        open={articleModalOpen}
+        onClose={() => setArticleModalOpen(false)}
+      />
     </StyledWrapper>
   );
 };
@@ -42,6 +56,12 @@ const DesignSystem: NextPage = () => {
 export default DesignSystem;
 
 const StyledWrapper = styled.div`
+  height: 100vh;
+  button {
+    background-color: aliceblue;
+    margin: 10px;
+    padding: 10px;
+  }
   .color-system {
     div {
       width: 100px;
