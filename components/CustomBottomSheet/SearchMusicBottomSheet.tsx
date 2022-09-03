@@ -24,11 +24,15 @@ const SearchMusicBottomSheet: React.FC<SearchMusicBottomSheetProps> = ({
 
   const [input, setInput] = useState('');
   const search = useCallback(async () => {
-    const res: AxiosResponse = await searchTrackAPI(input);
-    const {
-      results,
-    }: { results: { trackmatches: { track: Array<TrackType> } } } = res.data;
-    return results.trackmatches.track;
+    if (input.length > 0) {
+      const res: AxiosResponse = await searchTrackAPI(input);
+      const {
+        results,
+      }: { results: { trackmatches: { track: Array<TrackType> } } } = res.data;
+      return results.trackmatches.track;
+    } else {
+      return [];
+    }
   }, [input]);
 
   const { data, isLoading, error, refetch } = useQuery(
@@ -41,7 +45,7 @@ const SearchMusicBottomSheet: React.FC<SearchMusicBottomSheetProps> = ({
   useEffect(() => {
     refetch();
   }, [input]);
-  console.log(data);
+
   return (
     <BottomSheet open={open} onClose={onClose} {...props}>
       <StyledWrapper>
