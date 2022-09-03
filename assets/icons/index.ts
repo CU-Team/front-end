@@ -1,4 +1,5 @@
 export { default as BackIcon } from './BackIcon';
+export { default as CloseBtn } from './CloseBtn';
 export { default as CloseIcon } from './CloseIcon';
 export { default as EmojiPlusIcon } from './EmojiPlusIcon';
 export { default as KakaoIcon } from './KakaoIcon';
