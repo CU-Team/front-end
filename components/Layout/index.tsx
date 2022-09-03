@@ -30,5 +30,8 @@ const StyledWrapper = styled.div`
     min-height: 100%;
     height: fit-content;
     background-color: ${themedPalette.gray0};
+    position: relative;
+
+    overflow: hidden;
   }
 `;
