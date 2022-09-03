@@ -17,11 +17,13 @@ import { HomeTabEnum } from '@components/Home/constants';
 
 interface ArticlePageModalProps extends PageModalProps {
   selectedOpenPosition: string | null;
+  filterYoursOnOpen: boolean;
 }
 
 const ArticlePageModal: React.FC<ArticlePageModalProps> = ({
   onClose,
   selectedOpenPosition,
+  filterYoursOnOpen,
   open: bottomSheetOpen,
   ...props
 }) => {
@@ -56,14 +58,20 @@ const ArticlePageModal: React.FC<ArticlePageModalProps> = ({
   useEffect(() => {
     if (articleData) {
       if (selected === HomeTabEnum.TOTAL) {
-        setFiltered(articleData);
+        if (filterYoursOnOpen) {
+          setFiltered(
+            articleData.filter(value => value.author !== user?.username),
+          );
+        } else {
+          setFiltered(articleData);
+        }
       } else {
         setFiltered(
           articleData.filter(value => value.author === user?.username),
         );
       }
     }
-  }, [articleData, selected]);
+  }, [articleData, selected, filterYoursOnOpen]);
 
   return (
     <>

@@ -11,7 +11,7 @@ import useUser from '@hooks/useUser';
 
 const useKakaoMap = (
   articles: Array<ArticleType>,
-  onClickOverlay: (position: string) => void,
+  onClickOverlay: (position: string, filterYours: boolean) => void,
   processArticles: (
     articles: Array<ArticleType>,
   ) => Array<ProcessedArticleType>,
@@ -168,6 +168,11 @@ const useKakaoMap = (
                     String(article.position),
                   );
 
+                  overLays[overLays.length - 1].setAttribute(
+                    'class',
+                    `article ${article.retrieveYours ? 'yours' : ''}`,
+                  );
+
                   const numberWrapper =
                     overLays[overLays.length - 1].getElementsByClassName(
                       'number-wrapper',
@@ -209,7 +214,8 @@ const useKakaoMap = (
 
   useEffect(() => {
     if (currentAddress && currentKeyword && clickedKeyword !== null) {
-      onClickOverlay(clickedKeyword);
+      const el = document.getElementsByClassName('yours');
+      onClickOverlay(clickedKeyword, el.length > 0);
       setClickedKeyword(null);
     }
   }, [currentAddress, currentKeyword, clickedKeyword]);
