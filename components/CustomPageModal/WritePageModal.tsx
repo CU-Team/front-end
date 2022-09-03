@@ -12,6 +12,7 @@ import type { TrackType } from '@components/CustomBottomSheet/types';
 import SelectedMusicItem from '@components/CustomPageModal/SelectedMusicItem';
 import { postArticleAPI } from '~/api/article';
 import type { AxiosResponse } from 'axios';
+import useUser from '@hooks/useUser';
 
 interface WritePageModalProps extends PageModalProps {
   selectedAddData: SelectedAddDataType | null;
@@ -23,6 +24,7 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
   selectedAddData,
   ...props
 }) => {
+  const { user } = useUser();
   const [musicOpened, setMusicOpened] = useState(false);
   const [input, setInput] = useState('');
   const [selectedTrack, setSelectedTrack] = useState<TrackType | null>(null);
@@ -32,7 +34,7 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
   };
 
   const postArticle = async () => {
-    if (selectedAddData && selectedTrack) {
+    if (selectedAddData && selectedTrack && user) {
       const res: AxiosResponse = await postArticleAPI({
         address: selectedAddData.address,
         longitude: selectedAddData.location.longitude,
@@ -43,6 +45,7 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
         musicImg: selectedTrack.image[3]['#text'],
         singer: selectedTrack.artist,
         music: selectedTrack.name,
+        author: user.username,
       });
       console.log(res);
       return (res.status = 200);

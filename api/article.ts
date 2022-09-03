@@ -19,6 +19,7 @@ export const postArticleAPI = async (body: {
   singer: string;
   content: string;
   music: string;
+  author: string;
 }) => {
   try {
     const res = await API.post('articles/', body);

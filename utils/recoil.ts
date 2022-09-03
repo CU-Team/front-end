@@ -10,7 +10,7 @@ export const recoilLocalStorageEffect =
     if (typeof window !== 'undefined') {
       const savedValue = localStorage.getItem(key);
       if (savedValue != null) {
-        if (savedValue.length > 0) {
+        if (savedValue != 'undefined' && savedValue.length > 0) {
           setSelf(JSON.parse(savedValue));
         }
       }
