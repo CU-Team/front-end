@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { BackIcon } from '~/assets/icons';
-import MarkerIcon from '~/assets/icons/MarkerIcon';
+import { CloseIcon } from '~/assets/icons';
 import PrimaryMarkerIcon from '~/assets/icons/PrimaryMarkerIcon';
 import SearchIcon from '~/assets/icons/SearchIcon';
 import { themedPalette } from '~/libs/themes';
@@ -26,7 +25,7 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
       <StyledWrapper>
         <div className="header">
           <a className="close-btn" onClick={onClose}>
-            <BackIcon width={24} height={24} />
+            <CloseIcon width={24} height={24} />
           </a>
           <div className="body1">기록하기</div>
           <a
@@ -67,6 +66,7 @@ export default WritePageModal;
 
 const StyledWrapper = styled.div`
   padding: 0px 20px;
+
   &:focus-within {
     .inputs {
       transform: translateY(-70px);

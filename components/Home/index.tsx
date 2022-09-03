@@ -6,14 +6,21 @@ import { themedPalette } from '~/libs/themes';
 import { LogoStarIcon, WritingIcon } from '@assets/icons';
 import Tab from '@components/Home/Tab';
 import type { LocationType } from '@hooks/useGeolocation/types';
+import useHomeRoute from '@hooks/useHomeRoute';
+import { HomeRouteEnum } from '@hooks/useHomeRoute/constatns';
+import WritePageModal from '@components/CustomPageModal/WritePageModal';
+import ArticlePageModal from '@components/CustomPageModal/ArticlePageModal';
+import MyPageModal from '@components/CustomPageModal/MyPageModal';
 
 interface Props {}
 
 const HomeComponent: React.FC<Props> = props => {
   const {} = props;
 
+  const { openedRoute, open, close } = useHomeRoute();
+
   const onClickAddArticle = () => {
-    //todo : bottomsheet open
+    open(HomeRouteEnum.WRITE_ARTICLE);
   };
   const onClickOverlayItem = (body: {
     articleId: number;
@@ -21,8 +28,12 @@ const HomeComponent: React.FC<Props> = props => {
     address: string;
     location: LocationType;
   }) => {
+    open(HomeRouteEnum.ARTICLE);
     alert(JSON.stringify(body));
     //todo:
+  };
+  const onClickMyPage = () => {
+    open(HomeRouteEnum.MY_PAGE);
   };
 
   return (
@@ -33,7 +44,7 @@ const HomeComponent: React.FC<Props> = props => {
             <LogoStarIcon width={18} height={18} />
             <h1>{SERVICE_NAME}</h1>
           </div>
-          <div className={'my-page-item'} />
+          <div className={'my-page-item'} onClick={onClickMyPage} />
         </div>
         <div className={'bottom'}>
           <Tab />
@@ -46,13 +57,34 @@ const HomeComponent: React.FC<Props> = props => {
         <WritingIcon width={20} height={20} />
         <div className={'body1'}>기록하기</div>
       </div>
+      <div className={'modal'}>
+        <WritePageModal
+          open={openedRoute === HomeRouteEnum.WRITE_ARTICLE}
+          onClose={close}
+        />
+        <ArticlePageModal
+          open={openedRoute === HomeRouteEnum.ARTICLE}
+          onClose={close}
+        />
+        <MyPageModal
+          open={openedRoute === HomeRouteEnum.MY_PAGE}
+          onClose={close}
+        />
+      </div>
     </StyledWrapper>
   );
 };
 
 const StyledWrapper = styled.div`
   width: 100%;
+  height: 100vh;
   position: relative;
+
+  > .modal {
+    * {
+      z-index: 3;
+    }
+  }
 
   > div.add-article {
     cursor: pointer;

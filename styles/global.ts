@@ -1,10 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 import commonStyles from './common';
-import { fonts } from './fonts';
 
 export const GlobalStyle = createGlobalStyle`
   ${commonStyles}
-  ${fonts}
   html {
   }
 
