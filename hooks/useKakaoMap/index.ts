@@ -11,7 +11,7 @@ import useUser from '@hooks/useUser';
 
 const useKakaoMap = (
   articles: Array<ArticleType>,
-  onClickOverlay: (id: number) => void,
+  onClickOverlay: (position: string) => void,
   processArticles: (
     articles: Array<ArticleType>,
   ) => Array<ProcessedArticleType>,
@@ -29,7 +29,7 @@ const useKakaoMap = (
 
   const changedLocation = useRef<LocationType | null>(null);
 
-  const [clickedId, setClickedId] = useState<number | null>(null);
+  const [clickedKeyword, setClickedKeyword] = useState<string | null>(null);
 
   const { user } = useUser();
 
@@ -121,49 +121,78 @@ const useKakaoMap = (
 
           searchAddressFromCoords(markerPosition);
 
-          const processed = processArticles(articles);
-
-          processed.forEach((article: ProcessedArticleType) => {
-            const firstItem = article.data[0];
-            const position = new kakao.maps.LatLng(
-              firstItem.latitude,
-              firstItem.longitude,
-            );
-            const customOverlay = new kakao.maps.CustomOverlay({
-              position: position,
-              content: firstItem.author === user.username ? MINE : YOURS,
-              xAnchor: 0.3,
-              yAnchor: 0.91,
-            });
-            customOverlay.setMap(map);
-            const overLays = document.getElementsByClassName('article');
-            for (let i = 0; i < overLays.length; i++) {
-              overLays[overLays.length - 1].setAttribute(
-                'id',
-                String(firstItem.no),
+          const processedArticles = processArticles(articles);
+          const mine: Array<ProcessedArticleType> = processedArticles.map(
+            (value: ProcessedArticleType) => {
+              const filterArr = value.data.filter(
+                article => article.author === user.username,
               );
-              const numberWrapper =
-                overLays[overLays.length - 1].getElementsByClassName(
-                  'number-wrapper',
+              return {
+                position: value.position,
+                data: filterArr,
+              };
+            },
+          );
+          const yours: Array<ProcessedArticleType> = processedArticles.map(
+            (value: ProcessedArticleType) => {
+              const filterArr = value.data.filter(
+                article => article.author !== user.username,
+              );
+              return {
+                position: value.position,
+                data: filterArr,
+                retrieveYours: true,
+              };
+            },
+          );
+
+          [mine, yours].forEach(processed => {
+            processed.forEach((article: ProcessedArticleType) => {
+              if (article.data.length > 0) {
+                const firstItem = article.data[0];
+                const position = new kakao.maps.LatLng(
+                  firstItem?.latitude ?? INIT_LATITUDE,
+                  firstItem?.longitude ?? INIT_LONGITUDE,
                 );
-              for (let j = 0; j < numberWrapper.length; j++) {
-                if (article.data.length <= 1) {
-                  //@ts-ignore
-                  numberWrapper[j].style.display = 'none';
-                } else {
-                  const body = numberWrapper[j].getElementsByClassName('body2');
-                  for (let k = 0; k < body.length; k++) {
-                    body[k].innerHTML = String(article.data.length);
+                const customOverlay = new kakao.maps.CustomOverlay({
+                  position: position,
+                  content: firstItem.author === user.username ? MINE : YOURS,
+                  xAnchor: 0.3,
+                  yAnchor: 0.91,
+                });
+                customOverlay.setMap(map);
+                const overLays = document.getElementsByClassName('article');
+                for (let i = 0; i < overLays.length; i++) {
+                  overLays[overLays.length - 1].setAttribute(
+                    'id',
+                    String(article.position),
+                  );
+
+                  const numberWrapper =
+                    overLays[overLays.length - 1].getElementsByClassName(
+                      'number-wrapper',
+                    );
+                  for (let j = 0; j < numberWrapper.length; j++) {
+                    if (article.data.length <= 1) {
+                      //@ts-ignore
+                      numberWrapper[j].style.display = 'none';
+                    } else {
+                      const body =
+                        numberWrapper[j].getElementsByClassName('body2');
+                      for (let k = 0; k < body.length; k++) {
+                        body[k].innerHTML = String(article.data.length);
+                      }
+                    }
                   }
                 }
               }
-            }
+            });
           });
           const overLays = document.getElementsByClassName('article');
           for (let i = 0; i < overLays.length; i++) {
             //@ts-ignore
             overLays[i].onclick = () => {
-              setClickedId(Number(overLays[i].id));
+              setClickedKeyword(overLays[i].id);
             };
           }
           marker.setMap(map);
@@ -179,11 +208,11 @@ const useKakaoMap = (
   }, [currentAddress]);
 
   useEffect(() => {
-    if (currentAddress && currentKeyword && clickedId !== null) {
-      onClickOverlay(clickedId);
-      setClickedId(null);
+    if (currentAddress && currentKeyword && clickedKeyword !== null) {
+      onClickOverlay(clickedKeyword);
+      setClickedKeyword(null);
     }
-  }, [currentAddress, currentKeyword, clickedId]);
+  }, [currentAddress, currentKeyword, clickedKeyword]);
 
   return {
     currentKeyword,

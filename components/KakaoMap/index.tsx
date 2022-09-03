@@ -9,7 +9,7 @@ import { processArticle } from '@utils/article';
 
 interface Props {
   size?: { width: number; height: number };
-  openArticle: (body: { articleId: number }) => void;
+  openArticle: (body: { position: string }) => void;
   handleSelectedAddData: (body: { keyword: string; address: string }) => void;
   currentLocationRef: RefObject<LocationType | null>;
 }
@@ -18,10 +18,10 @@ const KakaoMap: React.FC<Props> = props => {
   const { size, openArticle, handleSelectedAddData, currentLocationRef } =
     props;
 
-  const onClickOverlay = (id: number) => {
+  const onClickOverlay = (position: string) => {
     if (currentAddress && currentKeyword) {
       openArticle({
-        articleId: id,
+        position,
       });
     }
   };

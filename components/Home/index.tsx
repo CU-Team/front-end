@@ -24,7 +24,9 @@ const HomeComponent: React.FC<Props> = props => {
   const [selectedAddData, setSelectedAddData] =
     useState<SelectedAddDataType | null>(null);
   const currentLocationRef = useRef<LocationType | null>(null);
-  const [selectedOpenId, setSelectedOpenId] = useState<number | null>(null);
+  const [selectedOpenPosition, setSelectedOpenPosition] = useState<
+    string | null
+  >(null);
 
   const handleSelectedAddData = (body: {
     keyword: string;
@@ -42,12 +44,12 @@ const HomeComponent: React.FC<Props> = props => {
   const onClickAddArticle = () => {
     open(HomeRouteEnum.WRITE_ARTICLE);
   };
-  const onClickOverlayItem = (body: { articleId: number }) => {
-    setSelectedOpenId(body.articleId);
+  const onClickOverlayItem = (body: { position: string }) => {
+    setSelectedOpenPosition(body.position);
     open(HomeRouteEnum.ARTICLE);
   };
   const onCloseOpenArticle = () => {
-    setSelectedOpenId(null);
+    setSelectedOpenPosition(null);
     close();
   };
   const onClickMyPage = () => {
@@ -89,7 +91,7 @@ const HomeComponent: React.FC<Props> = props => {
       <ArticlePageModal
         open={openedRoute === HomeRouteEnum.ARTICLE}
         onClose={onCloseOpenArticle}
-        selectedOpenId={selectedOpenId}
+        selectedOpenPosition={selectedOpenPosition}
       />
       <MyPageModal
         open={openedRoute === HomeRouteEnum.MY_PAGE}

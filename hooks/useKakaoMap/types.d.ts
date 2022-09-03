@@ -17,4 +17,5 @@ export interface ArticleType {
 export interface ProcessedArticleType {
   position: string;
   data: Array<ArticleType>;
+  retrieveYours?: boolean;
 }

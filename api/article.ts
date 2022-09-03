@@ -37,3 +37,12 @@ export const getUserArticles = async (name: string) => {
     return CamelCase(e.response);
   }
 };
+
+export const getArticlesByPositionAPI = async (keyword: string) => {
+  try {
+    const res = await API.get(`articles/position/${keyword}`);
+    return CamelCase(res);
+  } catch (e: any) {
+    return CamelCase(e.response);
+  }
+};

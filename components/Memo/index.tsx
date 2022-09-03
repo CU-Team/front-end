@@ -14,7 +14,6 @@ interface Props {
 
 const Memo: React.FC<Props> = ({ data, setOpen = (a: any) => null }) => {
   const [isPlay, setIsPlay] = useState(false);
-  console.log(data);
 
   if (!data) return null;
   return (

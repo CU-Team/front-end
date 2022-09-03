@@ -49,7 +49,8 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
         musicImg: selectedTrack.image[3]['#text'],
         singer: selectedTrack.artist,
         music: selectedTrack.name,
-        author: user.username,
+        author: 'temp',
+        // author: user.username,
       });
       return res;
     } else {
