@@ -5,6 +5,7 @@ import useKakaoMap from '@hooks/useKakaoMap';
 import useWatchLocation from '@hooks/useWatchGeolocation';
 import useArticles from '@hooks/useArticles';
 import type { LocationType } from '@hooks/useGeolocation/types';
+import { processArticle } from '@utils/article';
 
 interface Props {
   size?: { width: number; height: number };
@@ -27,7 +28,7 @@ const KakaoMap: React.FC<Props> = props => {
 
   const { location: currentLocation } = useWatchLocation();
 
-  const { filteredArticles: articles, processArticle } = useArticles();
+  const { filteredArticles: articles } = useArticles();
   const { currentKeyword, currentAddress } = useKakaoMap(
     articles,
     onClickOverlay,
