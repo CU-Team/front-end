@@ -1,0 +1,2 @@
+export const INIT_LATITUDE = 37.4951149;
+export const INIT_LONGITUDE = 127.0381716;

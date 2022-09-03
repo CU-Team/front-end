@@ -1,18 +1,16 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import styles from '@styles/Home.module.css';
-import useKakaoSignIn from '@hooks/useKakaoSignIn';
+import KakaoMap from '@components/KakaoMap';
 
 const Home: NextPage = () => {
-  const { signIn } = useKakaoSignIn();
-
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1 className={styles.title} onClick={signIn}>
+        <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
-
+        <KakaoMap />
         <p className={styles.description}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.tsx</code>
