@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import useKakaoMap from '@hooks/useKakaoMap';
 import useWatchLocation from '@hooks/useWatchGeolocation';
@@ -7,8 +7,8 @@ import type { LocationType } from '@hooks/useGeolocation/types';
 
 interface Props {
   size?: { width: number; height: number };
-  openArticle: (body: {
-    articleId: number;
+  openArticle: (body: { articleId: number }) => void;
+  handleSelectedAddData: (body: {
     keyword: string;
     address: string;
     location: LocationType;
@@ -16,15 +16,12 @@ interface Props {
 }
 
 const KakaoMap: React.FC<Props> = props => {
-  const { size, openArticle } = props;
+  const { size, openArticle, handleSelectedAddData } = props;
 
   const onClickOverlay = (id: number) => {
     if (currentAddress && currentKeyword) {
       openArticle({
         articleId: id,
-        address: currentAddress,
-        keyword: currentKeyword,
-        location: currentLocation,
       });
     }
   };
@@ -37,6 +34,16 @@ const KakaoMap: React.FC<Props> = props => {
     onClickOverlay,
     currentLocation,
   );
+
+  useEffect(() => {
+    if (currentAddress && currentKeyword && currentLocation) {
+      handleSelectedAddData({
+        keyword: currentKeyword,
+        location: currentLocation,
+        address: currentAddress,
+      });
+    }
+  }, [currentKeyword, currentAddress, currentLocation]);
 
   return <StyledWrapper id={'map'} {...size} />;
 };

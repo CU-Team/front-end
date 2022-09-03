@@ -38,7 +38,7 @@ const useKakaoMap = (
             if (value.length > 0) {
               setCurrentAddress(value[0].road_address?.address_name ?? null);
             } else {
-              alert('현재 위치의 주소를 가져올 수 없습니다.');
+              setCurrentAddress(null);
             }
           },
         );
@@ -57,7 +57,7 @@ const useKakaoMap = (
           if (value.length > 0) {
             setCurrentKeyword(value[0].place_name ?? null);
           } else {
-            setCurrentKeyword('현재 위치를 가져올 수 없습니다.');
+            setCurrentKeyword(null);
           }
         });
       } else {

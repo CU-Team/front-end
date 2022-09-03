@@ -7,11 +7,15 @@ import { themedPalette } from '~/libs/themes';
 import SearchMusicBottomSheet from '../CustomBottomSheet/SearchMusicBottomSheet';
 import type { PageModalProps } from '../PageModal';
 import PageModal from '../PageModal';
+import type { SelectedAddDataType } from '@components/Home/types';
 
-interface WritePageModalProps extends PageModalProps {}
+interface WritePageModalProps extends PageModalProps {
+  selectedAddData: SelectedAddDataType | null;
+}
 
 const WritePageModal: React.FC<WritePageModalProps> = ({
   onClose,
+  selectedAddData,
   ...props
 }) => {
   const [musicOpened, setMusicOpened] = useState(false);
@@ -19,6 +23,7 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
   const handleSubmit = () => {
     if (!input) return;
     if (!onClose) return;
+    alert(JSON.stringify(selectedAddData));
     setInput('');
     onClose();
   };
@@ -40,7 +45,8 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
           </div>
           <div className="title subtitle1">
             <div>
-              <PrimaryMarkerIcon width={19} height={22} /> <span>마루360</span>
+              <PrimaryMarkerIcon width={19} height={22} />
+              <span>{selectedAddData?.keyword ?? ''}</span>
               에서 경험한
             </div>
             <div>나의 하이라이트 기억은?</div>

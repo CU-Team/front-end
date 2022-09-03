@@ -7,7 +7,9 @@ import Memo from '../Memo';
 import type { PageModalProps } from '../PageModal';
 import PageModal from '../PageModal';
 
-interface ArticlePageModalProps extends PageModalProps {}
+interface ArticlePageModalProps extends PageModalProps {
+  selectedOpenId: number | null;
+}
 
 const ArticlePageModal: React.FC<ArticlePageModalProps> = ({
   onClose,

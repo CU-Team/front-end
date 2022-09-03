@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import KakaoMap from '@components/KakaoMap';
 import { SERVICE_NAME } from '~/constants';
@@ -11,6 +11,7 @@ import { HomeRouteEnum } from '@hooks/useHomeRoute/constatns';
 import WritePageModal from '@components/CustomPageModal/WritePageModal';
 import ArticlePageModal from '@components/CustomPageModal/ArticlePageModal';
 import MyPageModal from '@components/CustomPageModal/MyPageModal';
+import type { SelectedAddDataType } from '@components/Home/types';
 
 interface Props {}
 
@@ -19,18 +20,28 @@ const HomeComponent: React.FC<Props> = props => {
 
   const { openedRoute, open, close } = useHomeRoute();
 
-  const onClickAddArticle = () => {
-    open(HomeRouteEnum.WRITE_ARTICLE);
-  };
-  const onClickOverlayItem = (body: {
-    articleId: number;
+  const [selectedAddData, setSelectedAddData] =
+    useState<SelectedAddDataType | null>(null);
+  const [selectedOpenId, setSelectedOpenId] = useState<number | null>(null);
+
+  const handleSelectedAddData = (body: {
     keyword: string;
     address: string;
     location: LocationType;
   }) => {
+    setSelectedAddData(body);
+  };
+
+  const onClickAddArticle = () => {
+    open(HomeRouteEnum.WRITE_ARTICLE);
+  };
+  const onClickOverlayItem = (body: { articleId: number }) => {
+    setSelectedOpenId(body.articleId);
     open(HomeRouteEnum.ARTICLE);
-    alert(JSON.stringify(body));
-    //todo:
+  };
+  const onCloseOpenArticle = () => {
+    setSelectedOpenId(null);
+    close();
   };
   const onClickMyPage = () => {
     open(HomeRouteEnum.MY_PAGE);
@@ -52,7 +63,10 @@ const HomeComponent: React.FC<Props> = props => {
           </div>
         </div>
         <div className={'map-div'}>
-          <KakaoMap openArticle={onClickOverlayItem} />
+          <KakaoMap
+            openArticle={onClickOverlayItem}
+            handleSelectedAddData={handleSelectedAddData}
+          />
         </div>
         <div className={'add-article'} onClick={onClickAddArticle}>
           <WritingIcon width={20} height={20} />
@@ -62,10 +76,12 @@ const HomeComponent: React.FC<Props> = props => {
       <WritePageModal
         open={openedRoute === HomeRouteEnum.WRITE_ARTICLE}
         onClose={close}
+        selectedAddData={selectedAddData}
       />
       <ArticlePageModal
         open={openedRoute === HomeRouteEnum.ARTICLE}
-        onClose={close}
+        onClose={onCloseOpenArticle}
+        selectedOpenId={selectedOpenId}
       />
       <MyPageModal
         open={openedRoute === HomeRouteEnum.MY_PAGE}
