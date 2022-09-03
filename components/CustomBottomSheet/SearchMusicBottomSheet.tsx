@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { CloseBtn, CloseIcon } from '~/assets/icons';
 import type { BottomSheetProps } from '../BottomSheet';
@@ -13,11 +13,12 @@ const SearchMusicBottomSheet: React.FC<SearchMusicBottomSheetProps> = ({
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    if (!open) return;
+    if (!open) return setInput('');
     if (!inputRef.current) return;
     inputRef.current.focus();
   }, [open]);
 
+  const [input, setInput] = useState('');
   return (
     <BottomSheet open={open} onClose={onClose} {...props}>
       <StyledWrapper>
@@ -27,8 +28,12 @@ const SearchMusicBottomSheet: React.FC<SearchMusicBottomSheetProps> = ({
               ref={inputRef}
               type="text"
               placeholder="검색어를 입력해주세요"
+              value={input}
+              onChange={e => setInput(e.target.value)}
             />
-            <CloseBtn width={20} height={20} />
+            <a>
+              <CloseBtn width={20} height={20} />
+            </a>
           </div>
           <a className="close-btn body2" onClick={onClose}>
             닫기
@@ -61,6 +66,10 @@ const StyledWrapper = styled.div`
         outline: none;
         background-color: transparent;
         width: 100%;
+      }
+      a {
+        display: flex;
+        align-items: center;
       }
     }
     .close-btn {

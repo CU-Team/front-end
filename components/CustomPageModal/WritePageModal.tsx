@@ -154,6 +154,9 @@ const StyledWrapper = styled.div`
       &:focus {
         outline: 1px solid ${themedPalette.primary};
       }
+      &::placeholder {
+        color: ${themedPalette.gray3};
+      }
     }
   }
 
