@@ -52,7 +52,7 @@ const StyledWrapper = styled.div`
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 80px;
+    bottom: 60px;
     padding: 15px 31px 17px 27px;
     background-color: ${themedPalette.gray10};
     z-index: 1;
@@ -100,7 +100,7 @@ const StyledWrapper = styled.div`
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      padding: 5px 0;
+      padding: 11px 0;
       > .title {
         display: flex;
         flex-direction: row;
@@ -115,7 +115,7 @@ const StyledWrapper = styled.div`
       }
     }
     > .bottom {
-      margin-top: 15px;
+      margin-top: 10px;
       width: 100%;
     }
   }

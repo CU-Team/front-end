@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import useTab from '@hooks/useTab';
 import { useRecoilState } from 'recoil';
-import { SelectedHomeTabAtom } from '@components/Home/atom';
+import { SelectedHomeTabAtom } from '@components/Home/atoms';
 import type { HomeTabEnum } from '@components/Home/constants';
 
 const useHomeTab = (initialValue: HomeTabEnum) => {
