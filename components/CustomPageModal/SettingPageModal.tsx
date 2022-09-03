@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import CloseIcon from '~/assets/icons/CloseIcon';
@@ -11,6 +12,11 @@ const SettingPageModal: React.FC<SettingPageModalProps> = ({
   onClose,
   ...props
 }) => {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push('/login');
+  };
+
   return (
     <PageModal onClose={onClose} {...props}>
       <StyledWrapper>
@@ -24,9 +30,13 @@ const SettingPageModal: React.FC<SettingPageModalProps> = ({
         <a className="body1 row">계정</a>
         <a className="body2 email"> gd0541234@gmail.com</a>
         <div className="hr"> </div>
-        <a className="body1 row">계정 삭제</a>
+        <a className="body1 row" onClick={handleClick}>
+          계정 삭제
+        </a>
         <div className="hr"> </div>
-        <a className="body1 logout">로그아웃</a>
+        <a className="body1 logout" onClick={handleClick}>
+          로그아웃
+        </a>
       </StyledWrapper>
     </PageModal>
   );

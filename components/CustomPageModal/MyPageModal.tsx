@@ -14,6 +14,7 @@ import Setting from '~/assets/icons/Setting';
 import SettingPageModal from './SettingPageModal';
 import { useQuery } from '@tanstack/react-query';
 import { getUserArticles } from '~/api/article';
+import DefaultIcon from '~/assets/icons/DefaultIcon';
 
 interface MyPageModalProps extends PageModalProps {}
 
@@ -44,7 +45,9 @@ const MyPageModal: React.FC<MyPageModalProps> = ({ onClose, ...props }) => {
             </a>
           </div>
           <div className="profile-header">
-            <div className="user-img"> </div>
+            <div className="user-img">
+              <DefaultIcon width={60} height={60} />
+            </div>
             <div>
               {username}의 <br />
               하이라이트 <span>{data?.data.length}개</span>

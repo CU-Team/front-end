@@ -13,6 +13,7 @@ import ArticlePageModal from '@components/CustomPageModal/ArticlePageModal';
 import MyPageModal from '@components/CustomPageModal/MyPageModal';
 import type { SelectedAddDataType } from '@components/Home/types';
 import { INIT_LATITUDE, INIT_LONGITUDE } from '@hooks/useGeolocation/constants';
+import DefaultIcon from '~/assets/icons/DefaultIcon';
 
 interface Props {}
 
@@ -63,7 +64,9 @@ const HomeComponent: React.FC<Props> = props => {
               <LogoStarIcon width={18} height={18} />
               <h1>{SERVICE_NAME}</h1>
             </div>
-            <div className={'my-page-item'} onClick={onClickMyPage} />
+            <div className={'my-page-item'} onClick={onClickMyPage}>
+              <DefaultIcon width={36} height={36} />
+            </div>
           </div>
           <div className={'bottom'}>
             <Tab />
