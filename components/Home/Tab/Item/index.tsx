@@ -41,7 +41,7 @@ const StyledWrapper = styled.div<{
     margin-right: 0;
   }
 
-  > div {
+  > .body1 {
     color: ${({ isSelected }) =>
       isSelected ? themedPalette.gray0 : themedPalette.gray4};
   }

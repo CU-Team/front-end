@@ -5,6 +5,7 @@ import { SERVICE_NAME } from '~/constants';
 import { themedPalette } from '~/libs/themes';
 import { LogoStarIcon, WritingIcon } from '@assets/icons';
 import Tab from '@components/Home/Tab';
+import type { LocationType } from '@hooks/useGeolocation/types';
 
 interface Props {}
 
@@ -13,6 +14,15 @@ const HomeComponent: React.FC<Props> = props => {
 
   const onClickAddArticle = () => {
     //todo : bottomsheet open
+  };
+  const onClickOverlayItem = (body: {
+    articleId: number;
+    keyword: string;
+    address: string;
+    location: LocationType;
+  }) => {
+    alert(JSON.stringify(body));
+    //todo:
   };
 
   return (
@@ -30,7 +40,7 @@ const HomeComponent: React.FC<Props> = props => {
         </div>
       </div>
       <div className={'map-div'}>
-        <KakaoMap />
+        <KakaoMap openArticle={onClickOverlayItem} />
       </div>
       <div className={'add-article'} onClick={onClickAddArticle}>
         <WritingIcon width={20} height={20} />
