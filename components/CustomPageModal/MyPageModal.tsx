@@ -29,7 +29,7 @@ const MyPageModal: React.FC<MyPageModalProps> = ({ onClose, ...props }) => {
   const { data, isLoading, error } = useQuery(['user'], () =>
     user ? getUserArticles(user?.username) : () => {},
   );
-
+  console.log(data);
   if (!data?.data) return null;
   return (
     <>
@@ -79,7 +79,7 @@ const MyPageModal: React.FC<MyPageModalProps> = ({ onClose, ...props }) => {
           </div>
           {tab === `feed` && (
             <div className="memo-list">
-              {data && data.length > 0 ? (
+              {data.data && data.data.length > 0 ? (
                 <>
                   {data.data.map((memoItem: any, idx: any) => (
                     <Memo key={idx} data={memoItem} />
@@ -95,9 +95,9 @@ const MyPageModal: React.FC<MyPageModalProps> = ({ onClose, ...props }) => {
           )}
           {tab === `location` && (
             <div className="location-list">
-              {data && data.length > 0 ? (
+              {data.data && data.data.length > 0 ? (
                 <>
-                  {processArticle(data).map(value => (
+                  {processArticle(data.data).map(value => (
                     <>
                       <div className="location" key={value.position}>
                         <div>

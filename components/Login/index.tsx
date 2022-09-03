@@ -10,9 +10,12 @@ import useUser from '@hooks/useUser';
 import type { AxiosResponse } from 'axios';
 import { postUserAPI } from '~/api/user';
 import type { UserType } from '@hooks/useUser/type';
+import useKakaoSignIn from '@hooks/useKakaoSignIn';
 
 const Login: React.FC = () => {
   const router = useRouter();
+
+  const { signIn } = useKakaoSignIn();
   const { handleUser } = useUser();
   const postUser = async () => {
     const res: AxiosResponse = await postUserAPI({
@@ -24,10 +27,11 @@ const Login: React.FC = () => {
     return data;
   };
   const handleClick = async () => {
-    const res = await postUser();
-    if (res) {
-      router.push(routePath.index);
-    }
+    signIn();
+    // const res = await postUser();
+    // if (res) {
+    // router.push(routePath.index);
+    // }
   };
   return (
     <StyledWrapper>
