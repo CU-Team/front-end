@@ -3,6 +3,7 @@ import { css } from 'styled-components';
 const commonStyles = css`
   .subtitle1 {
     font-size: 18px;
+    font-weight: 600;
   }
   .subtitle2 {
     font-size: 18px;

@@ -3,4 +3,8 @@ export { default as EmojiPlusIcon } from './EmojiPlusIcon';
 export { default as KakaoIcon } from './KakaoIcon';
 export { default as LogoStarIcon } from './LogoStarIcon';
 export { default as MarkerIcon } from './MarkerIcon';
+export { default as PlayIcon } from './PlayIcon';
+export { default as PrimaryMarkerIcon } from './PrimaryMarkerIcon';
+export { default as SearchIcon } from './SearchIcon';
+export { default as StopIcon } from './StopIcon';
 export { default as WritingIcon } from './WritingIcon';
