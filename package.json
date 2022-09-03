@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest --passWithNoTests --watch-all",
-    "svgr": "npx @svgr/cli --template assets/svgs/svgr-cli.template.js assets/svgs src/assets/icons --out-dir assets/icons --icon --typescript --no-dimensions"
+    "svgr": "npx @svgr/cli --template assets/svgs/svgr-cli.template.js assets/svgs assets/icons --out-dir assets/icons --icon --typescript --no-dimensions"
   },
   "dependencies": {
     "@svgr/cli": "^6.1.2",
@@ -30,6 +30,7 @@
     "prettier": "^2.5.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "recoil": "^0.7.5",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {

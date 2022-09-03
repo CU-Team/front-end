@@ -1,16 +1,14 @@
+import React from 'react';
 import type { NextPage } from 'next';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
-import { routePath } from '@assets/routePath';
+import HomeComponent from '@components/Home';
 
 const Home: NextPage = () => {
-  const router = useRouter();
-
-  const onClick = () => {
-    router.push(routePath.login);
-  };
-
-  return <StyledWrapper>home</StyledWrapper>;
+  return (
+    <StyledWrapper>
+      <HomeComponent />
+    </StyledWrapper>
+  );
 };
 
 export default Home;

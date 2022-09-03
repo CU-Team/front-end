@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Layout from '~/components/Layout';
 import { GlobalStyle } from '~/styles/global';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RecoilRoot } from 'recoil';
 
 const queryClient = new QueryClient();
 
@@ -14,12 +15,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="description" content="BROWSER-CONTENT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <GlobalStyle />
-      <QueryClientProvider client={queryClient}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </QueryClientProvider>
+      <RecoilRoot>
+        <GlobalStyle />
+        <QueryClientProvider client={queryClient}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </QueryClientProvider>
+      </RecoilRoot>
     </>
   );
 }
