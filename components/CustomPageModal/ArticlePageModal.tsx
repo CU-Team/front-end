@@ -63,7 +63,9 @@ const ArticlePageModal: React.FC<ArticlePageModalProps> = ({
             articleData.filter(value => value.author !== user?.username),
           );
         } else {
-          setFiltered(articleData);
+          setFiltered(
+            articleData.filter(value => value.author === user?.username),
+          );
         }
       } else {
         setFiltered(
@@ -90,7 +92,12 @@ const ArticlePageModal: React.FC<ArticlePageModalProps> = ({
           <div className="body2 count">총 {filtered.length}개</div>
           <div className="memo-list">
             {filtered?.map(value => (
-              <Memo key={value.no} data={value} setOpen={setOpen} />
+              <Memo
+                key={value.no}
+                data={value}
+                setOpen={setOpen}
+                useMine={true}
+              />
             ))}
           </div>
         </StyledWrapper>

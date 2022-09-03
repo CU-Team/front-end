@@ -5,6 +5,7 @@ import CloseIcon from '~/assets/icons/CloseIcon';
 import { themedPalette } from '~/libs/themes';
 import type { PageModalProps } from '../PageModal';
 import PageModal from '../PageModal';
+import useUser from '@hooks/useUser';
 
 interface SettingPageModalProps extends PageModalProps {}
 
@@ -13,6 +14,7 @@ const SettingPageModal: React.FC<SettingPageModalProps> = ({
   ...props
 }) => {
   const router = useRouter();
+  const { user } = useUser();
   const handleClick = () => {
     router.push('/login');
   };
@@ -28,7 +30,7 @@ const SettingPageModal: React.FC<SettingPageModalProps> = ({
           <a className={`write-btn`}> </a>
         </div>
         <a className="body1 row">계정</a>
-        <a className="body2 email"> gd0541234@gmail.com</a>
+        <a className="body2 email">{user?.email}</a>
         <div className="hr"> </div>
         <a className="body1 row" onClick={handleClick}>
           계정 삭제

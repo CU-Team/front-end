@@ -15,11 +15,16 @@ const useUser = () => {
       setUser(data);
       return res;
     };
-    get();
+    // get();
   }, []);
+
+  const handleUser = (data: UserType) => {
+    setUser(data);
+  };
 
   return {
     user,
+    handleUser,
   };
 };
 

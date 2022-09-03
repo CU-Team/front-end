@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import type { TrackType } from '@components/CustomBottomSheet/types';
 import styled from 'styled-components';
 import { themedPalette } from '~/libs/themes';
-import { AudioPauseIcon, AudioPlayIcon } from '@assets/icons';
+import {
+  AudioPauseIcon,
+  AudioPlayIcon,
+  PlayIcon,
+  StopIcon,
+} from '@assets/icons';
 
 interface Props {
   track: TrackType;
@@ -18,16 +23,14 @@ const SelectedMusicItem: React.FC<Props> = props => {
     setIsPlaying(prev => !prev);
   };
 
-  //todo: image temp로 변경
   return (
     <StyledWrapper>
       <div className={'item-wrapper'}>
         <div className={'music-img-div'} onClick={onClickPlayingMusic}>
-          <img src={track.image[3]['#text']} width={50} height={50} />
           {isPlaying ? (
-            <AudioPlayIcon height={24} width={24} />
+            <PlayIcon height={50} width={50} />
           ) : (
-            <AudioPauseIcon width={24} height={24} />
+            <StopIcon width={50} height={50} />
           )}
         </div>
         <div className={'title'}>

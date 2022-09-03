@@ -15,20 +15,20 @@ import SettingPageModal from './SettingPageModal';
 import { useQuery } from '@tanstack/react-query';
 import { getUserArticles } from '~/api/article';
 import DefaultIcon from '~/assets/icons/DefaultIcon';
+import useUser from '@hooks/useUser';
+import NoItemIcon from '@assets/icons/NoItemIcon';
+import { processArticle } from '@utils/article';
 
 interface MyPageModalProps extends PageModalProps {}
 
-const username = 'sion';
 const MyPageModal: React.FC<MyPageModalProps> = ({ onClose, ...props }) => {
-  // const user = useUser();
-  // console.log(user.user?.username);
+  const { user } = useUser();
   const [tab, setTab] = useState('feed');
   const [open, setOpen] = useState(false);
 
   const { data, isLoading, error } = useQuery(['user'], () =>
-    getUserArticles(username),
+    user ? getUserArticles(user?.username) : () => {},
   );
-  // console.log(data?.data);
 
   if (!data?.data) return null;
   return (
@@ -49,7 +49,7 @@ const MyPageModal: React.FC<MyPageModalProps> = ({ onClose, ...props }) => {
               <DefaultIcon width={60} height={60} />
             </div>
             <div>
-              {username}의 <br />
+              {user?.username ?? '회원'}의 <br />
               하이라이트 <span>{data?.data.length}개</span>
             </div>
           </div>
@@ -79,93 +79,45 @@ const MyPageModal: React.FC<MyPageModalProps> = ({ onClose, ...props }) => {
           </div>
           {tab === `feed` && (
             <div className="memo-list">
-              {data?.data.map((memoItem: any, idx: any) => (
-                <Memo key={idx} data={memoItem} />
-              ))}
+              {data && data.length > 0 ? (
+                <>
+                  {data.data.map((memoItem: any, idx: any) => (
+                    <Memo key={idx} data={memoItem} />
+                  ))}
+                </>
+              ) : (
+                <div className={'no-item-wrapper'}>
+                  <NoItemIcon height={100} width={100} />
+                  <div className={'body1'}>아직 기록한 하이라이트가 없어요</div>
+                </div>
+              )}
             </div>
           )}
           {tab === `location` && (
             <div className="location-list">
-              <div className="location">
-                <div>
-                  <LocationStarActive width={15} height={15} />
-                  <div className="Body1">마루 360</div>
+              {data && data.length > 0 ? (
+                <>
+                  {processArticle(data).map(value => (
+                    <>
+                      <div className="location" key={value.position}>
+                        <div>
+                          <LocationStarActive width={15} height={15} />
+                          <div className="Body1">{value.position}</div>
+                        </div>
+                        <div className="back">
+                          <div>{value.data.length}개</div>
+                          <BackIcon width={20} height={20} />
+                        </div>
+                      </div>
+                    </>
+                  ))}
+                </>
+              ) : (
+                <div className={'no-item-wrapper'}>
+                  <NoItemIcon width={100} height={100} />
+                  <div className={'body1'}>아직 기록한 하이라이트가 없어요</div>
                 </div>
-                <div className="back">
-                  <div>4개</div>
-                  <BackIcon width={20} height={20} />
-                </div>
-              </div>
-              <div className="location">
-                <div>
-                  <LocationStarActive width={15} height={15} />
-                  <div className="Body1">마루 360</div>
-                </div>
-                <div className="back">
-                  <div>4개</div>
-                  <BackIcon width={20} height={20} />
-                </div>
-              </div>
-              <div className="location">
-                <div>
-                  <LocationStarActive width={15} height={15} />
-                  <div className="Body1">마루 360</div>
-                </div>
-                <div className="back">
-                  <div>4개</div>
-                  <BackIcon width={20} height={20} />
-                </div>
-              </div>
-              <div className="location">
-                <div>
-                  <LocationStarActive width={15} height={15} />
-                  <div className="Body1">마루 360</div>
-                </div>
-                <div className="back">
-                  <div>4개</div>
-                  <BackIcon width={20} height={20} />
-                </div>
-              </div>
-              <div className="location">
-                <div>
-                  <LocationStarActive width={15} height={15} />
-                  <div className="Body1">마루 360</div>
-                </div>
-                <div className="back">
-                  <div>4개</div>
-                  <BackIcon width={20} height={20} />
-                </div>
-              </div>
-              <div className="location">
-                <div>
-                  <LocationStarActive width={15} height={15} />
-                  <div className="Body1">마루 360</div>
-                </div>
-                <div className="back">
-                  <div>4개</div>
-                  <BackIcon width={20} height={20} />
-                </div>
-              </div>
-              <div className="location">
-                <div>
-                  <LocationStarActive width={15} height={15} />
-                  <div className="Body1">마루 360</div>
-                </div>
-                <div className="back">
-                  <div>4개</div>
-                  <BackIcon width={20} height={20} />
-                </div>
-              </div>
-              <div className="location">
-                <div>
-                  <LocationStarActive width={15} height={15} />
-                  <div className="Body1">마루 360</div>
-                </div>
-                <div className="back">
-                  <div>4개</div>
-                  <BackIcon width={20} height={20} />
-                </div>
-              </div>
+              )}
             </div>
           )}
         </StyledWrapper>
@@ -234,12 +186,38 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 30px;
+    .no-item-wrapper {
+      flex-direction: column;
+      margin-top: 100px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      > div {
+        margin-top: 16px;
+        color: ${themedPalette.gray3};
+      }
+    }
   }
   .location-list {
     padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    .no-item-wrapper {
+      flex-direction: column;
+      margin-top: 100px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      > div {
+        margin-top: 16px;
+        color: ${themedPalette.gray3};
+      }
+    }
     .location {
       display: flex;
       justify-content: space-between;

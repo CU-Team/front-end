@@ -196,7 +196,8 @@ const useKakaoMap = (
           const overLays = document.getElementsByClassName('article');
           for (let i = 0; i < overLays.length; i++) {
             //@ts-ignore
-            overLays[i].onclick = () => {
+            overLays[i].onclick = e => {
+              isYours.current = checkIsYoursItem(e);
               setClickedKeyword(overLays[i].id);
             };
           }
@@ -206,6 +207,13 @@ const useKakaoMap = (
     }
   }, [mapLoaded, articles, user]);
 
+  const isYours = useRef<boolean>(false);
+
+  const checkIsYoursItem = (e: PointerEvent) => {
+    //@ts-ignore
+    return e.target.offsetParent.className.includes('yours');
+  };
+
   useEffect(() => {
     if (currentAddress) {
       getPlaceName(currentAddress);
@@ -214,8 +222,7 @@ const useKakaoMap = (
 
   useEffect(() => {
     if (currentAddress && currentKeyword && clickedKeyword !== null) {
-      const el = document.getElementsByClassName('yours');
-      onClickOverlay(clickedKeyword, el.length > 0);
+      onClickOverlay(clickedKeyword, isYours.current);
       setClickedKeyword(null);
     }
   }, [currentAddress, currentKeyword, clickedKeyword]);

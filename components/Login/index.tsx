@@ -5,11 +5,29 @@ import KakaoIcon from '~/assets/icons/KakaoIcon';
 import LoginImg from '~/assets/icons/LoginImg';
 import Logo from '~/assets/icons/Logo';
 import { themedPalette } from '~/libs/themes';
+import { routePath } from '@assets/routePath';
+import useUser from '@hooks/useUser';
+import type { AxiosResponse } from 'axios';
+import { postUserAPI } from '~/api/user';
+import type { UserType } from '@hooks/useUser/type';
 
 const Login: React.FC = () => {
   const router = useRouter();
-  const handleClick = () => {
-    router.push('/');
+  const { handleUser } = useUser();
+  const postUser = async () => {
+    const res: AxiosResponse = await postUserAPI({
+      username: 'hightlight',
+      email: 'highlight@unithon.com',
+    });
+    const { data }: { data: UserType } = res;
+    handleUser(data);
+    return data;
+  };
+  const handleClick = async () => {
+    const res = await postUser();
+    if (res) {
+      router.push(routePath.index);
+    }
   };
   return (
     <StyledWrapper>

@@ -5,7 +5,9 @@ import { themedPalette } from '~/libs/themes';
 import {
   AudioPauseIcon,
   AudioPlayIcon,
+  PlayIcon,
   SelectedButton,
+  StopIcon,
   UnselectedButton,
 } from '@assets/icons';
 
@@ -38,11 +40,11 @@ const SearchMusicItem: React.FC<Props> = props => {
     <StyledWrapper>
       <div className={'item-wrapper'}>
         <div className={'music-img-div'} onClick={onClickPlayingMusic}>
-          <img src={track.image[3]['#text']} width={50} height={50} />
+          {/*<img src={track.image[3]['#text']} width={50} height={50} />*/}
           {isPlaying ? (
-            <AudioPlayIcon height={24} width={24} />
+            <PlayIcon height={50} width={50} />
           ) : (
-            <AudioPauseIcon width={24} height={24} />
+            <StopIcon width={50} height={50} />
           )}
         </div>
         <div className={'title'}>

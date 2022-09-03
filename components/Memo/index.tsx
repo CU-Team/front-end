@@ -6,13 +6,22 @@ import PlayIcon from '~/assets/icons/PlayIcon';
 import StopIcon from '~/assets/icons/StopIcon';
 import { themedPalette } from '~/libs/themes';
 import { translateTime } from '~/libs/utils';
+import type { ArticleType } from '@hooks/useKakaoMap/types';
+import useHomeTab from '@hooks/useTab/useHomeTab';
+import { HomeTabEnum } from '@components/Home/constants';
 
 interface Props {
   setOpen?: any;
-  data?: any;
+  data?: ArticleType;
+  useMine?: boolean;
 }
 
-const Memo: React.FC<Props> = ({ data, setOpen = (a: any) => null }) => {
+const Memo: React.FC<Props> = ({
+  data,
+  setOpen = (a: any) => null,
+  useMine = false,
+}) => {
+  const { selected } = useHomeTab();
   const [isPlay, setIsPlay] = useState(false);
 
   if (!data) return null;
@@ -20,8 +29,14 @@ const Memo: React.FC<Props> = ({ data, setOpen = (a: any) => null }) => {
     <StyledWrapper>
       <div className="memo">
         <div className="title">
-          <div className="username body2">익명</div>
-          <div>·</div>
+          {useMine && selected !== HomeTabEnum.MY_RECORD ? (
+            <>
+              <div className="username body2">{data.author}</div>
+              <div>·</div>
+            </>
+          ) : (
+            <></>
+          )}
           <div className="time">{translateTime(data.createdAt)}</div>
         </div>
         <div className="body1 content">{data.content}</div>
@@ -107,6 +122,9 @@ const StyledWrapper = styled.div`
         border-radius: 6px;
       }
       .content {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         .title {
           color: ${themedPalette.gray6};
           margin-bottom: 6px;
