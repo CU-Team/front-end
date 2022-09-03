@@ -21,6 +21,12 @@ const SettingPageModal: React.FC<SettingPageModalProps> = ({
           <div className="body1">설정</div>
           <a className={`write-btn`}> </a>
         </div>
+        <a className="body1 row">계정</a>
+        <a className="body2 email"> gd0541234@gmail.com</a>
+        <div className="hr"> </div>
+        <a className="body1 row">계정 삭제</a>
+        <div className="hr"> </div>
+        <a className="body1 logout">로그아웃</a>
       </StyledWrapper>
     </PageModal>
   );
@@ -114,5 +120,21 @@ const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
     gap: 5px;
+  }
+  .row,
+  .logout {
+    display: block;
+  }
+  .email {
+    margin-top: 6px;
+    color: ${themedPalette.gray3};
+  }
+  .hr {
+    margin: 20px 0;
+    height: 1px;
+    background-color: #f4f3f6;
+  }
+  .logout {
+    color: #ff4646;
   }
 `;
