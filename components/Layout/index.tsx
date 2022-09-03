@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import type { ReactNode } from 'react';
+import { themedPalette } from '~/libs/themes';
 
 type Props = {
   children: ReactNode;
@@ -24,9 +25,13 @@ const StyledWrapper = styled.div`
   bottom: 0;
   overflow-x: hidden;
   overflow-y: scroll;
+  background-color: #fafafa;
   & > .container {
     max-width: 375px;
     width: 100%;
+    min-height: 100%;
+    height: fit-content;
     margin: 0 auto;
+    background-color: ${themedPalette.gray0};
   }
 `;
