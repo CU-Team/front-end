@@ -22,6 +22,8 @@ const useKakaoMap = (
 
   const changedLocation = useRef<LocationType | null>(null);
 
+  const [clickedId, setClickedId] = useState<number | null>(null);
+
   const searchAddressFromCoords = useCallback(
     (coords: kakao.maps.LatLng) => {
       if (!mapLoaded) {
@@ -149,8 +151,7 @@ const useKakaoMap = (
           for (let i = 0; i < overLays.length; i++) {
             //@ts-ignore
             overLays[i].onclick = () => {
-              alert(Number(overLays[i].id));
-              onClickOverlay(Number(overLays[i].id));
+              setClickedId(Number(overLays[i].id));
             };
           }
           marker.setMap(map);
@@ -166,8 +167,11 @@ const useKakaoMap = (
   }, [currentAddress]);
 
   useEffect(() => {
-    console.log(currentAddress, currentKeyword);
-  }, [currentAddress, currentKeyword]);
+    if (currentAddress && currentKeyword && clickedId !== null) {
+      onClickOverlay(clickedId);
+      setClickedId(null);
+    }
+  }, [currentAddress, currentKeyword, clickedId]);
 
   return {
     currentKeyword,
