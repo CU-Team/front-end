@@ -27,6 +27,7 @@ const HomeComponent: React.FC<Props> = props => {
   const [selectedOpenPosition, setSelectedOpenPosition] = useState<
     string | null
   >(null);
+  const [filterYoursOnOpen, setFilterYoursOnOpen] = useState<boolean>(false);
 
   const handleSelectedAddData = (body: {
     keyword: string;
@@ -44,8 +45,12 @@ const HomeComponent: React.FC<Props> = props => {
   const onClickAddArticle = () => {
     open(HomeRouteEnum.WRITE_ARTICLE);
   };
-  const onClickOverlayItem = (body: { position: string }) => {
+  const onClickOverlayItem = (body: {
+    position: string;
+    filterYours: boolean;
+  }) => {
     setSelectedOpenPosition(body.position);
+    setFilterYoursOnOpen(body.filterYours);
     open(HomeRouteEnum.ARTICLE);
   };
   const onCloseOpenArticle = () => {
@@ -92,6 +97,7 @@ const HomeComponent: React.FC<Props> = props => {
         open={openedRoute === HomeRouteEnum.ARTICLE}
         onClose={onCloseOpenArticle}
         selectedOpenPosition={selectedOpenPosition}
+        filterYoursOnOpen={filterYoursOnOpen}
       />
       <MyPageModal
         open={openedRoute === HomeRouteEnum.MY_PAGE}
