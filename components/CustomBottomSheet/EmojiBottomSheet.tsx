@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { CloseIcon } from '~/assets/icons';
+import DislikeIcon from '~/assets/icons/DislikeIcon';
+import LikeIcon from '~/assets/icons/LikeIcon';
 import type { BottomSheetProps } from '../BottomSheet';
 import BottomSheet from '../BottomSheet';
 
@@ -20,7 +22,10 @@ const EmojiBottomSheet: React.FC<EmojiBottomSheetProps> = ({
             <CloseIcon width={24} height={24} />
           </a>
         </div>
-        <div className={`list`}> </div>
+        <div className={`list`} onClick={onClose}>
+          <LikeIcon width={140} height={140} />
+          <DislikeIcon width={140} height={140} />
+        </div>
       </StyledWrapper>
     </BottomSheet>
   );
@@ -29,7 +34,7 @@ const EmojiBottomSheet: React.FC<EmojiBottomSheetProps> = ({
 export default EmojiBottomSheet;
 
 const StyledWrapper = styled.div`
-  height: 40vh;
+  height: 240px;
   position: relative;
   .header {
     display: flex;
@@ -39,5 +44,11 @@ const StyledWrapper = styled.div`
     gap: 16px;
     .close-btn {
     }
+  }
+  .list {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    gap: 30px;
   }
 `;

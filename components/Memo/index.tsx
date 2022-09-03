@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import DislikeSmall from '~/assets/icons/DislikeSmall';
 import EmojiPlusIcon from '~/assets/icons/EmojiPlusIcon';
+import LikeSmall from '~/assets/icons/LikeSmall';
 import PlayIcon from '~/assets/icons/PlayIcon';
 import StopIcon from '~/assets/icons/StopIcon';
 import { themedPalette } from '~/libs/themes';
@@ -58,16 +60,16 @@ const Memo: React.FC<Props> = ({
       </div>
       <div className="emoji-list">
         <a className="btn caption">
-          <div className="emoji"> </div>
+          <div className="emoji">
+            <LikeSmall width={17} height={17} />
+          </div>
           <div className="count">1</div>
         </a>
         <a className="btn caption">
-          <div className="emoji"> </div>
+          <div className="emoji">
+            <DislikeSmall width={17} height={17} />
+          </div>
           <div className="count">12</div>
-        </a>
-        <a className="btn caption">
-          <div className="emoji"> </div>
-          <div className="count">133</div>
         </a>
         <a className="btn" onClick={() => setOpen(true)}>
           <EmojiPlusIcon width={21} height={21} />
@@ -151,7 +153,6 @@ const StyledWrapper = styled.div`
       .emoji {
         width: 17px;
         height: 17px;
-        background-color: ${themedPalette.gray2};
         border-radius: 4px;
       }
     }
