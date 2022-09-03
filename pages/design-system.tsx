@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import BottomSheet from '~/components/BottomSheet';
 import ArticlePageModal from '~/components/CustomPageModal/ArticlePageModal';
+import MyPageModal from '~/components/CustomPageModal/MyPageModal';
 import WritePageModal from '~/components/CustomPageModal/WritePageModal';
 import Spinner from '~/components/Spinner';
 import { themedPalette } from '~/libs/themes';
@@ -10,14 +11,18 @@ import { themedPalette } from '~/libs/themes';
 const DesignSystem: NextPage = () => {
   const [readOpen, setReadOpen] = useState(false);
   const [writePageModalOpen, setWritePageModalOpen] = useState(false);
-  const [articleModalOpen, setArticleModalOpen] = useState(false);
+  const [articlePageModalOpen, setArticlePageModalOpen] = useState(false);
+  const [myPageModalOpen, setMyPageModalOpen] = useState(false);
   return (
     <StyledWrapper>
       <button onClick={() => setReadOpen(true)}>BottomSheet</button>
       <button onClick={() => setWritePageModalOpen(true)}>
         WritePageModal
       </button>
-      <button onClick={() => setArticleModalOpen(true)}>articleModal</button>
+      <button onClick={() => setArticlePageModalOpen(true)}>
+        articleModal
+      </button>
+      <button onClick={() => setMyPageModalOpen(true)}>myPageModalOpen</button>
       <Spinner />
       <h1>h1</h1>
       <h2>h2</h2>
@@ -48,8 +53,12 @@ const DesignSystem: NextPage = () => {
         onClose={() => setWritePageModalOpen(false)}
       />
       <ArticlePageModal
-        open={articleModalOpen}
-        onClose={() => setArticleModalOpen(false)}
+        open={articlePageModalOpen}
+        onClose={() => setArticlePageModalOpen(false)}
+      />
+      <MyPageModal
+        open={myPageModalOpen}
+        onClose={() => setMyPageModalOpen(false)}
       />
     </StyledWrapper>
   );
