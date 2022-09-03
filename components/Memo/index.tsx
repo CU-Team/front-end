@@ -5,9 +5,11 @@ import PlayIcon from '~/assets/icons/PlayIcon';
 import StopIcon from '~/assets/icons/StopIcon';
 import { themedPalette } from '~/libs/themes';
 
-interface Props {}
+interface Props {
+  setOpen?: any;
+}
 
-const Memo: React.FC<Props> = () => {
+const Memo: React.FC<Props> = ({ setOpen = (a: any) => null }) => {
   const [isPlay, setIsPlay] = useState(false);
   return (
     <StyledWrapper>
@@ -51,7 +53,7 @@ const Memo: React.FC<Props> = () => {
           <div className="emoji"> </div>
           <div className="count">133</div>
         </a>
-        <a className="btn">
+        <a className="btn" onClick={() => setOpen(true)}>
           <EmojiPlusIcon width={21} height={21} />
         </a>
       </div>

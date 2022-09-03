@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { BackIcon } from '~/assets/icons';
 import MarkerIcon from '~/assets/icons/MarkerIcon';
 import { themedPalette } from '~/libs/themes';
+import EmojiBottomSheet from '../CustomBottomSheet/EmojiBottomSheet';
 import Memo from '../Memo';
 import type { PageModalProps } from '../PageModal';
 import PageModal from '../PageModal';
@@ -15,29 +16,33 @@ const ArticlePageModal: React.FC<ArticlePageModalProps> = ({
   onClose,
   ...props
 }) => {
+  const [open, setOpen] = useState(false);
   return (
-    <PageModal onClose={onClose} {...props}>
-      <StyledWrapper>
-        <div className="header">
-          <a className="btn" onClick={onClose}>
-            <BackIcon width={24} height={24} />
-          </a>
-          <div className="location">
-            <MarkerIcon width={13.33} height={16} />{' '}
-            <div className="body1">마루 360</div>
+    <>
+      <PageModal onClose={onClose} {...props}>
+        <StyledWrapper>
+          <div className="header">
+            <a className="btn" onClick={onClose}>
+              <BackIcon width={24} height={24} />
+            </a>
+            <div className="location">
+              <MarkerIcon width={13.33} height={16} />{' '}
+              <div className="body1">마루 360</div>
+            </div>
+            <a className={`body1 btn`}> </a>
           </div>
-          <a className={`body1 btn`}> </a>
-        </div>
-        <div className="body2 count">총 12개</div>
-        <div className="memo-list">
-          <Memo />
-          <Memo />
-          <Memo />
-          <Memo />
-          <Memo />
-        </div>
-      </StyledWrapper>
-    </PageModal>
+          <div className="body2 count">총 12개</div>
+          <div className="memo-list">
+            <Memo setOpen={setOpen} />
+            <Memo setOpen={setOpen} />
+            <Memo setOpen={setOpen} />
+            <Memo setOpen={setOpen} />
+            <Memo setOpen={setOpen} />
+          </div>
+        </StyledWrapper>
+      </PageModal>
+      <EmojiBottomSheet open={open} onClose={() => setOpen(false)} />
+    </>
   );
 };
 
