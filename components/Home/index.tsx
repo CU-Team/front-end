@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import KakaoMap from '@components/KakaoMap';
 import { SERVICE_NAME } from '~/constants';
@@ -12,6 +12,7 @@ import WritePageModal from '@components/CustomPageModal/WritePageModal';
 import ArticlePageModal from '@components/CustomPageModal/ArticlePageModal';
 import MyPageModal from '@components/CustomPageModal/MyPageModal';
 import type { SelectedAddDataType } from '@components/Home/types';
+import { INIT_LATITUDE, INIT_LONGITUDE } from '@hooks/useGeolocation/constants';
 
 interface Props {}
 
@@ -22,14 +23,20 @@ const HomeComponent: React.FC<Props> = props => {
 
   const [selectedAddData, setSelectedAddData] =
     useState<SelectedAddDataType | null>(null);
+  const currentLocationRef = useRef<LocationType | null>(null);
   const [selectedOpenId, setSelectedOpenId] = useState<number | null>(null);
 
   const handleSelectedAddData = (body: {
     keyword: string;
     address: string;
-    location: LocationType;
   }) => {
-    setSelectedAddData(body);
+    setSelectedAddData({
+      ...body,
+      location: currentLocationRef.current ?? {
+        latitude: INIT_LATITUDE,
+        longitude: INIT_LONGITUDE,
+      },
+    });
   };
 
   const onClickAddArticle = () => {
@@ -66,6 +73,7 @@ const HomeComponent: React.FC<Props> = props => {
           <KakaoMap
             openArticle={onClickOverlayItem}
             handleSelectedAddData={handleSelectedAddData}
+            currentLocationRef={currentLocationRef}
           />
         </div>
         <div className={'add-article'} onClick={onClickAddArticle}>

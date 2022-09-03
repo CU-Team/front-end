@@ -1,8 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { CloseBtn, CloseIcon } from '~/assets/icons';
+import { CloseBtn } from '~/assets/icons';
 import type { BottomSheetProps } from '../BottomSheet';
 import BottomSheet from '../BottomSheet';
+import { searchTrackAPI } from '~/api/lastFM';
+import { useQuery } from '@tanstack/react-query';
+import type { AxiosResponse } from 'axios';
+import type { TrackType } from '@components/CustomBottomSheet/types';
 
 interface SearchMusicBottomSheetProps extends BottomSheetProps {}
 
@@ -19,6 +23,25 @@ const SearchMusicBottomSheet: React.FC<SearchMusicBottomSheetProps> = ({
   }, [open]);
 
   const [input, setInput] = useState('');
+  const search = useCallback(async () => {
+    const res: AxiosResponse = await searchTrackAPI(input);
+    const {
+      results,
+    }: { results: { trackmatches: { track: Array<TrackType> } } } = res.data;
+    return results.trackmatches.track;
+  }, [input]);
+
+  const { data, isLoading, error, refetch } = useQuery(
+    ['music'],
+    () => search(),
+    {
+      enabled: false,
+    },
+  );
+  useEffect(() => {
+    refetch();
+  }, [input]);
+  console.log(data);
   return (
     <BottomSheet open={open} onClose={onClose} {...props}>
       <StyledWrapper>

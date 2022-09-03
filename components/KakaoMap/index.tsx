@@ -1,3 +1,4 @@
+import type { RefObject } from 'react';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import useKakaoMap from '@hooks/useKakaoMap';
@@ -8,15 +9,13 @@ import type { LocationType } from '@hooks/useGeolocation/types';
 interface Props {
   size?: { width: number; height: number };
   openArticle: (body: { articleId: number }) => void;
-  handleSelectedAddData: (body: {
-    keyword: string;
-    address: string;
-    location: LocationType;
-  }) => void;
+  handleSelectedAddData: (body: { keyword: string; address: string }) => void;
+  currentLocationRef: RefObject<LocationType | null>;
 }
 
 const KakaoMap: React.FC<Props> = props => {
-  const { size, openArticle, handleSelectedAddData } = props;
+  const { size, openArticle, handleSelectedAddData, currentLocationRef } =
+    props;
 
   const onClickOverlay = (id: number) => {
     if (currentAddress && currentKeyword) {
@@ -39,11 +38,15 @@ const KakaoMap: React.FC<Props> = props => {
     if (currentAddress && currentKeyword && currentLocation) {
       handleSelectedAddData({
         keyword: currentKeyword,
-        location: currentLocation,
         address: currentAddress,
       });
     }
-  }, [currentKeyword, currentAddress, currentLocation]);
+  }, [currentKeyword, currentAddress]);
+
+  useEffect(() => {
+    // @ts-ignore
+    currentLocationRef.current = currentLocation;
+  }, [currentLocation]);
 
   return <StyledWrapper id={'map'} {...size} />;
 };
