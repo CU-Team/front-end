@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PageModal from '../PageModal';
@@ -11,7 +12,6 @@ import LocationStarActive from '~/assets/icons/\blocationStarActive';
 import Memo from '../Memo';
 import Setting from '~/assets/icons/Setting';
 import SettingPageModal from './SettingPageModal';
-import useUser from '~/hooks/useUser';
 import { useQuery } from '@tanstack/react-query';
 import { getUserArticles } from '~/api/article';
 
@@ -27,7 +27,8 @@ const MyPageModal: React.FC<MyPageModalProps> = ({ onClose, ...props }) => {
   const { data, isLoading, error } = useQuery(['user'], () =>
     getUserArticles(username),
   );
-  console.log(data, isLoading, error);
+  // console.log(data?.data);
+
   if (!data?.data) return null;
   return (
     <>

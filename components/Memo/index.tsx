@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import EmojiPlusIcon from '~/assets/icons/EmojiPlusIcon';
 import PlayIcon from '~/assets/icons/PlayIcon';
 import StopIcon from '~/assets/icons/StopIcon';
 import { themedPalette } from '~/libs/themes';
+import { translateTime } from '~/libs/utils';
 
 interface Props {
   setOpen?: any;
@@ -12,22 +14,18 @@ interface Props {
 
 const Memo: React.FC<Props> = ({ data, setOpen = (a: any) => null }) => {
   const [isPlay, setIsPlay] = useState(false);
+  console.log(data);
+
   if (!data) return null;
   return (
     <StyledWrapper>
       <div className="memo">
         <div className="title">
-          <div className="username body2">익명1234</div>
+          <div className="username body2">익명</div>
           <div>·</div>
-          <div className="time"> 1분전</div>
+          <div className="time">{translateTime(data.createdAt)}</div>
         </div>
-        <div className="body1 content">
-          마루 360에서 해커톤 진행함 하하하 마루 360에서 해커톤 진행함
-          하하하마루 360에서 해커톤 진행함 하하하마루 360에서 해커톤 진행함
-          하하하마루 360에서 해커톤 진행함 하하하마루 360에서 해커톤 진행함
-          하하하마루 360에서 해커톤 진행함 하하하마루 360에서 해커톤 진행함
-          하하하
-        </div>
+        <div className="body1 content">{data.content}</div>
         <div className="music-player">
           <div className="cover-img" onClick={() => setIsPlay(!isPlay)}>
             {isPlay ? (
@@ -37,8 +35,10 @@ const Memo: React.FC<Props> = ({ data, setOpen = (a: any) => null }) => {
             )}
           </div>
           <div className="content">
-            <div className="title body2">노래제목 노래제목</div>
-            <div className="subtitle caption">가수이름가수이름</div>
+            <div className="title body2">{data.music}</div>
+            <div className="subtitle caption">
+              {data.singer || '등록된 가수명이 없습니다.'}
+            </div>
           </div>
         </div>
       </div>

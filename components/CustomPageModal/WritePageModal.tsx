@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CloseIcon from '~/assets/icons/CloseIcon';
