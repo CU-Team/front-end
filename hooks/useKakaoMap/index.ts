@@ -121,16 +121,17 @@ const useKakaoMap = (
 
           searchAddressFromCoords(markerPosition);
 
-          console.log(processArticles(articles));
+          const processed = processArticles(articles);
 
-          articles.forEach((article: ArticleType) => {
+          processed.forEach((article: ProcessedArticleType) => {
+            const firstItem = article.data[0];
             const position = new kakao.maps.LatLng(
-              article.latitude,
-              article.longitude,
+              firstItem.latitude,
+              firstItem.longitude,
             );
             const customOverlay = new kakao.maps.CustomOverlay({
               position: position,
-              content: article.author === user.username ? MINE : YOURS,
+              content: firstItem.author === user.username ? MINE : YOURS,
               xAnchor: 0.3,
               yAnchor: 0.91,
             });
@@ -139,22 +140,22 @@ const useKakaoMap = (
             for (let i = 0; i < overLays.length; i++) {
               overLays[overLays.length - 1].setAttribute(
                 'id',
-                String(article.no),
+                String(firstItem.no),
               );
               const numberWrapper =
                 overLays[overLays.length - 1].getElementsByClassName(
                   'number-wrapper',
                 );
               for (let j = 0; j < numberWrapper.length; j++) {
-                // if (article <= 1) {
-                //@ts-ignore
-                numberWrapper[j].style.display = 'none';
-                // } else {
-                //   const body = numberWrapper[j].getElementsByClassName('body2');
-                //   for (let k = 0; k < body.length; k++) {
-                //     body[k].innerHTML = String(article.count);
-                //   }
-                // }
+                if (article.data.length <= 1) {
+                  //@ts-ignore
+                  numberWrapper[j].style.display = 'none';
+                } else {
+                  const body = numberWrapper[j].getElementsByClassName('body2');
+                  for (let k = 0; k < body.length; k++) {
+                    body[k].innerHTML = String(article.data.length);
+                  }
+                }
               }
             }
           });
