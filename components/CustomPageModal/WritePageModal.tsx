@@ -41,9 +41,7 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
           rows={10}
           value={input}
           onChange={e => setInput(e.target.value)}
-        >
-          {' '}
-        </textarea>
+        />
         <div className="location">
           <MarkerIcon width={13.33} height={16} />{' '}
           <div className="body1">마루 360</div>
@@ -56,11 +54,12 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
 export default WritePageModal;
 
 const StyledWrapper = styled.div`
-  padding: 30px 20px;
+  padding: 0px 20px;
   .header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    height: 56px;
     .close-btn {
       display: flex;
       align-items: center;
@@ -78,6 +77,10 @@ const StyledWrapper = styled.div`
         cursor: pointer;
         color: ${themedPalette.primary};
       }
+    }
+    div {
+      display: flex;
+      align-items: center;
     }
   }
   textarea {

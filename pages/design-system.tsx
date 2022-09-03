@@ -2,17 +2,21 @@ import type { NextPage } from 'next';
 import { useState } from 'react';
 import styled from 'styled-components';
 import BottomSheet from '~/components/BottomSheet';
+import ArticlePageModal from '~/components/CustomPageModal/ArticlePageModal';
 import WritePageModal from '~/components/CustomPageModal/WritePageModal';
-import PageModal from '~/components/PageModal';
 import { themedPalette } from '~/libs/themes';
 
 const DesignSystem: NextPage = () => {
   const [readOpen, setReadOpen] = useState(false);
-  const [pageModal, setPageModal] = useState(false);
+  const [writePageModalOpen, setWritePageModalOpen] = useState(false);
+  const [articleModalOpen, setArticleModalOpen] = useState(false);
   return (
     <StyledWrapper>
       <button onClick={() => setReadOpen(true)}>BottomSheet</button>
-      <button onClick={() => setPageModal(true)}>pageModal</button>
+      <button onClick={() => setWritePageModalOpen(true)}>
+        WritePageModal
+      </button>
+      <button onClick={() => setArticleModalOpen(true)}>articleModal</button>
       <h1>h1</h1>
       <h2>h2</h2>
       <h3>h3</h3>
@@ -37,7 +41,14 @@ const DesignSystem: NextPage = () => {
       <BottomSheet open={readOpen} onClose={() => setReadOpen(false)}>
         dd
       </BottomSheet>
-      <WritePageModal open={pageModal} onClose={() => setPageModal(false)} />
+      <WritePageModal
+        open={writePageModalOpen}
+        onClose={() => setWritePageModalOpen(false)}
+      />
+      <ArticlePageModal
+        open={articleModalOpen}
+        onClose={() => setArticleModalOpen(false)}
+      />
     </StyledWrapper>
   );
 };
@@ -45,6 +56,7 @@ const DesignSystem: NextPage = () => {
 export default DesignSystem;
 
 const StyledWrapper = styled.div`
+  height: 100vh;
   button {
     background-color: aliceblue;
     margin: 10px;

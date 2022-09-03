@@ -8,14 +8,12 @@ import BackIcon from '~/assets/icons/BackIcon';
 export interface PageModalProps {
   open?: boolean;
   onClose?: () => void;
-  title?: string;
   children?: ReactNode[] | ReactNode;
 }
 
 const PageModal: React.FC<PageModalProps> = ({
   children,
   open = false,
-  title = '',
   onClose,
 }) => {
   return (
@@ -52,6 +50,7 @@ const StyledWrapper = styled.div`
     background-color: ${themedPalette.gray0};
     transform: translateX(100%);
     transition: transform 0.15s ease-out;
+    overflow-y: scroll;
   }
   &.open {
     .dimmed {
