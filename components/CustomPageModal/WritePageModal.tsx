@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { CloseIcon } from '~/assets/icons';
+import CloseIcon from '~/assets/icons/CloseIcon';
 import PrimaryMarkerIcon from '~/assets/icons/PrimaryMarkerIcon';
 import SearchIcon from '~/assets/icons/SearchIcon';
 import { themedPalette } from '~/libs/themes';

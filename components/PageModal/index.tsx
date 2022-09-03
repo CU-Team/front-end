@@ -1,9 +1,7 @@
 import type { ReactNode } from 'react';
-import { useEffect } from 'react';
 import React from 'react';
 import styled from 'styled-components';
 import { themedPalette } from '~/libs/themes';
-import BackIcon from '~/assets/icons/BackIcon';
 
 export interface PageModalProps {
   open?: boolean;
