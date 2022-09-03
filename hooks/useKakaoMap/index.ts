@@ -3,12 +3,18 @@ import useScript from '@hooks/useScript';
 import type { LocationType } from '@hooks/useGeolocation/types';
 import { INIT_LATITUDE, INIT_LONGITUDE } from '@hooks/useGeolocation/constants';
 import { MINE, YOURS } from '@components/Home/Article/constants';
-import type { ArticleType } from '@hooks/useKakaoMap/types';
+import type {
+  ArticleType,
+  ProcessedArticleType,
+} from '@hooks/useKakaoMap/types';
 import useUser from '@hooks/useUser';
 
 const useKakaoMap = (
   articles: Array<ArticleType>,
   onClickOverlay: (id: number) => void,
+  processArticles: (
+    articles: Array<ArticleType>,
+  ) => Array<ProcessedArticleType>,
   currentLocation?: LocationType,
 ) => {
   const { isLoaded: mapLoaded } = useScript(
@@ -114,6 +120,8 @@ const useKakaoMap = (
           });
 
           searchAddressFromCoords(markerPosition);
+
+          console.log(processArticles(articles));
 
           articles.forEach((article: ArticleType) => {
             const position = new kakao.maps.LatLng(

@@ -27,10 +27,11 @@ const KakaoMap: React.FC<Props> = props => {
 
   const { location: currentLocation } = useWatchLocation();
 
-  const { filteredArticles: articles } = useArticles();
+  const { filteredArticles: articles, processArticle } = useArticles();
   const { currentKeyword, currentAddress } = useKakaoMap(
     articles,
     onClickOverlay,
+    processArticle,
     currentLocation,
   );
 

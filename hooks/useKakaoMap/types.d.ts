@@ -14,3 +14,7 @@ export interface ArticleType {
   title: string | null;
   updatedAt: string;
 }
+export interface ProcessedArticleType {
+  position: string;
+  data: Array<ArticleType>;
+}
