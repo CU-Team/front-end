@@ -10,4 +10,5 @@ export const themedPalette = {
   gray2: '#CBCAD1',
   gray1: '#E2E1E6',
   gray0: '#FFFFFF',
+  primary: '#745EFF',
 } as const;
