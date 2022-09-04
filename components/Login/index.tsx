@@ -57,9 +57,15 @@ export default Login;
 const StyledWrapper = styled.div`
   margin: 0 20px;
   height: 100vh;
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none !important;
+  }
   .header {
     margin-top: 100px;
     .h2 {

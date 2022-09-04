@@ -16,12 +16,14 @@ interface Props {
   setOpen?: any;
   data?: ArticleType;
   useMine?: boolean;
+  showEmoji?: boolean;
 }
 
 const Memo: React.FC<Props> = ({
   data,
   setOpen = (a: any) => null,
   useMine = false,
+  showEmoji = true,
 }) => {
   const { selected } = useHomeTab();
   const [isPlay, setIsPlay] = useState(false);
@@ -58,6 +60,7 @@ const Memo: React.FC<Props> = ({
           </div>
         </div>
       </div>
+
       <div className="emoji-list">
         <a className="btn caption">
           <div className="emoji">
@@ -71,9 +74,11 @@ const Memo: React.FC<Props> = ({
           </div>
           <div className="count">12</div>
         </a>
-        <a className="btn" onClick={() => setOpen(true)}>
-          <EmojiPlusIcon width={21} height={21} />
-        </a>
+        {showEmoji && (
+          <a className="btn" onClick={() => setOpen(true)}>
+            <EmojiPlusIcon width={21} height={21} />
+          </a>
+        )}
       </div>
     </StyledWrapper>
   );

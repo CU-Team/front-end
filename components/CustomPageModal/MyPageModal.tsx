@@ -45,46 +45,48 @@ const MyPageModal: React.FC<MyPageModalProps> = ({
     <>
       <PageModal onClose={onClose} open={modalOpen} {...props}>
         <StyledWrapper>
-          <div className="header">
-            <a className="btn" onClick={onClose}>
-              <BackIcon width={24} height={24} />
-            </a>
-            <div className="location body1">마이페이지</div>
-            <a className={`btn`} onClick={() => setOpen(true)}>
-              <Setting width={24} height={24} />
-            </a>
-          </div>
-          <div className="profile-header">
-            <div className="user-img">
-              <DefaultIcon width={60} height={60} />
-            </div>
-            <div>
-              {user?.username ?? '회원'}의 <br />
-              하이라이트 <span>{data?.data.length}개</span>
-            </div>
-          </div>
-          <div className="tabs-wrapper">
-            <div className="tabs">
-              <a
-                className={`tab ${tab === `feed` ? `active` : ``}`}
-                onClick={() => setTab('feed')}
-              >
-                {tab === `feed` ? (
-                  <FeedActive width={22} height={22} />
-                ) : (
-                  <Feed width={22} height={22} />
-                )}
+          <div className={'sticky'}>
+            <div className="header">
+              <a className="btn" onClick={onClose}>
+                <BackIcon width={24} height={24} />
               </a>
-              <a
-                className={`tab ${tab === `location` ? `active` : ``}`}
-                onClick={() => setTab('location')}
-              >
-                {tab === `location` ? (
-                  <LocationStarActive width={22} height={22} />
-                ) : (
-                  <LocationStar width={22} height={22} />
-                )}
+              <div className="location body1">마이페이지</div>
+              <a className={`btn`} onClick={() => setOpen(true)}>
+                <Setting width={24} height={24} />
               </a>
+            </div>
+            <div className="profile-header">
+              <div className="user-img">
+                <DefaultIcon width={60} height={60} />
+              </div>
+              <div>
+                {user?.username ?? '회원'}의 <br />
+                하이라이트 <span>{data?.data.length}개</span>
+              </div>
+            </div>
+            <div className="tabs-wrapper">
+              <div className="tabs">
+                <a
+                  className={`tab ${tab === `feed` ? `active` : ``}`}
+                  onClick={() => setTab('feed')}
+                >
+                  {tab === `feed` ? (
+                    <FeedActive width={22} height={22} />
+                  ) : (
+                    <Feed width={22} height={22} />
+                  )}
+                </a>
+                <a
+                  className={`tab ${tab === `location` ? `active` : ``}`}
+                  onClick={() => setTab('location')}
+                >
+                  {tab === `location` ? (
+                    <LocationStarActive width={22} height={22} />
+                  ) : (
+                    <LocationStar width={22} height={22} />
+                  )}
+                </a>
+              </div>
             </div>
           </div>
           {tab === `feed` && (
@@ -92,7 +94,7 @@ const MyPageModal: React.FC<MyPageModalProps> = ({
               {data.data && data.data.length > 0 ? (
                 <>
                   {data.data.map((memoItem: any, idx: any) => (
-                    <Memo key={idx} data={memoItem} />
+                    <Memo key={idx} data={memoItem} showEmoji={false} />
                   ))}
                 </>
               ) : (
@@ -141,52 +143,58 @@ export default MyPageModal;
 
 const StyledWrapper = styled.div`
   padding-bottom: 30px;
-  & > .header {
-    padding: 0px 20px;
+
+  & > .sticky {
     top: 0;
     position: sticky;
-    height: 56px;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
-    background-color: white;
-    .btn {
+    background-color: ${themedPalette.gray0};
+
+    & > .header {
+      padding: 0 20px;
+      height: 56px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 30px;
-    }
-    .location {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-  }
-  .profile-header {
-    padding: 0px 20px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    .user-img {
-      width: 60px;
-      height: 60px;
-      background-color: ${themedPalette.gray1};
-      border-radius: 50%;
-    }
-  }
-  .tabs-wrapper {
-    padding: 0 20px;
-    border-bottom: 1px solid #f4f3f6;
-    .tabs {
-      display: flex;
-      .tab {
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      background-color: white;
+      .btn {
         display: flex;
+        align-items: center;
         justify-content: center;
-        width: 50%;
-        padding: 12px;
-        &.active {
-          border-bottom: 1px solid ${themedPalette.gray10};
+        width: 30px;
+      }
+      .location {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+    }
+    .profile-header {
+      padding: 0px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      .user-img {
+        width: 60px;
+        height: 60px;
+        background-color: ${themedPalette.gray1};
+        border-radius: 50%;
+      }
+    }
+    .tabs-wrapper {
+      padding: 0 20px;
+      border-bottom: 1px solid #f4f3f6;
+      .tabs {
+        display: flex;
+        .tab {
+          display: flex;
+          justify-content: center;
+          width: 50%;
+          padding: 12px;
+          &.active {
+            border-bottom: 1px solid ${themedPalette.gray10};
+          }
         }
       }
     }
