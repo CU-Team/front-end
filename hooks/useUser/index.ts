@@ -18,7 +18,7 @@ const useUser = () => {
     // get();
   }, []);
 
-  const handleUser = (data: UserType) => {
+  const handleUser = (data: UserType | null) => {
     setUser(data);
   };
 

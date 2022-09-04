@@ -14,8 +14,9 @@ const SettingPageModal: React.FC<SettingPageModalProps> = ({
   ...props
 }) => {
   const router = useRouter();
-  const { user } = useUser();
+  const { user, handleUser } = useUser();
   const handleClick = () => {
+    handleUser(null);
     router.push('/login');
   };
 

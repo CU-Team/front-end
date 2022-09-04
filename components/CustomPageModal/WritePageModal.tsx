@@ -50,6 +50,7 @@ const WritePageModal: React.FC<WritePageModalProps> = ({
         singer: selectedTrack.artist,
         music: selectedTrack.name,
         author: user.username,
+        userId: user.id,
       });
       return res;
     } else {

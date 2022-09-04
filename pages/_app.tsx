@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>BROWSER TITLE</title>
+        <title>Hightlight</title>
         <meta name="description" content="BROWSER-CONTENT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

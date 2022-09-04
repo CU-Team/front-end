@@ -16,7 +16,7 @@ const useKakaoSignIn = () => {
     const redirectDomain: string = process.env.NEXT_PUBLIC_DOMAIN ?? '';
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     Kakao.Auth.authorize({
-      redirectUri: `${redirectDomain}/auth/kakao/callback`,
+      redirectUri: `${redirectDomain}auth/kakao/callback`,
       state: `{"redirect": "${window.location.href}"}`,
       throughTalk: true,
     });

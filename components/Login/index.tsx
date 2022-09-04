@@ -27,11 +27,11 @@ const Login: React.FC = () => {
     return data;
   };
   const handleClick = async () => {
-    signIn();
-    // const res = await postUser();
-    // if (res) {
-    // router.push(routePath.index);
-    // }
+    // signIn();
+    const res = await postUser();
+    if (res) {
+      router.push(routePath.index);
+    }
   };
   return (
     <StyledWrapper>

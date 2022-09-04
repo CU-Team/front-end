@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PageModal from '../PageModal';
 import type { PageModalProps } from '../PageModal';
@@ -21,19 +21,29 @@ import { processArticle } from '@utils/article';
 
 interface MyPageModalProps extends PageModalProps {}
 
-const MyPageModal: React.FC<MyPageModalProps> = ({ onClose, ...props }) => {
+const MyPageModal: React.FC<MyPageModalProps> = ({
+  onClose,
+  open: modalOpen,
+  ...props
+}) => {
   const { user } = useUser();
   const [tab, setTab] = useState('feed');
   const [open, setOpen] = useState(false);
 
-  const { data, isLoading, error } = useQuery(['user'], () =>
+  const { data, isLoading, error, refetch } = useQuery(['user'], () =>
     user ? getUserArticles(user?.username) : () => {},
   );
-  console.log(data);
+
+  useEffect(() => {
+    if (modalOpen) {
+      refetch();
+    }
+  }, [modalOpen]);
+
   if (!data?.data) return null;
   return (
     <>
-      <PageModal onClose={onClose} {...props}>
+      <PageModal onClose={onClose} open={modalOpen} {...props}>
         <StyledWrapper>
           <div className="header">
             <a className="btn" onClick={onClose}>
